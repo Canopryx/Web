@@ -164,6 +164,31 @@ p {
   -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.72) 44%, rgba(0, 0, 0, 0.18) 68%, transparent 86%);
 }
 
+.secure-glow {
+  color: #1d7c49;
+  text-shadow:
+    0 0 7px rgba(29, 124, 73, 0.18),
+    0 0 16px rgba(29, 124, 73, 0.18),
+    0 0 28px rgba(107, 198, 142, 0.14);
+  background: linear-gradient(
+    to right,
+    #1d7c49 12%,
+    #46a66b 36%,
+    #89d3a4 58%,
+    #1d7c49 84%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.enter-after-nav {
+  opacity: 0;
+  animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--enter-delay, 0.42s) both;
+  will-change: transform, opacity;
+}
+
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;
@@ -189,7 +214,7 @@ body {
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-14px);
   }
   to {
     opacity: 1;

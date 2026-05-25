@@ -7,8 +7,8 @@ const About: React.FC = () => {
     <div className="relative">
       <section className="page-shell pt-36 md:pt-44">
         <div
-          className="mx-auto max-w-3xl text-center"
-          style={{ opacity: 0, animation: 'fadeInUp 0.7s ease-out 0s forwards' }}
+          className="enter-after-nav mx-auto max-w-3xl text-center"
+          style={{ ['--enter-delay' as string]: '0.42s' }}
         >
           <span className="eyebrow mx-auto">About</span>
           <h1 className="mt-6 text-4xl font-semibold tracking-[-0.04em] text-[color:var(--color-text)] md:text-6xl">
@@ -24,8 +24,8 @@ const About: React.FC = () => {
         {ABOUT_PILLARS.map((pillar, index) => (
           <article
             key={pillar.title}
-            className="panel px-6 py-6"
-            style={{ opacity: 0, animation: `fadeInUp 0.65s ease-out ${0.1 + index * 0.12}s forwards` }}
+            className="enter-after-nav panel px-6 py-6"
+            style={{ ['--enter-delay' as string]: `${0.54 + index * 0.08}s` }}
           >
             <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text)]">{pillar.title}</h2>
             <p className="mt-4 text-base leading-8 text-[color:var(--color-text-muted)]">{pillar.description}</p>

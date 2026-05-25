@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { NavContext } from '../app-shell';
 
@@ -17,17 +16,17 @@ const Hero: React.FC = () => {
         />
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.98, y: 24 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 flex max-w-5xl flex-col items-center"
+      <div
+        className="enter-after-nav relative z-10 flex max-w-5xl flex-col items-center"
+        style={{ ['--enter-delay' as string]: '0.46s' }}
       >
-        <h1 className="max-w-4xl text-5xl font-semibold leading-[1.04] tracking-[-0.05em] text-[color:var(--color-text)] md:text-7xl lg:text-[5.4rem]">
-          Stick around, we&apos;re building something secure.
+        <h1 className="max-w-5xl text-5xl font-extrabold leading-[1.05] tracking-tight text-[color:var(--color-text)] md:text-7xl lg:text-[5.5rem]">
+          Stick around, we&apos;re building
+          <br />
+          something <span className="secure-glow">secure.</span>
         </h1>
 
-        <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-[color:var(--color-text-muted)] md:text-xl">
+        <p className="mt-6 max-w-2xl text-lg font-medium leading-8 tracking-wide text-[color:var(--color-text-muted)] md:text-xl">
           A next-generation cybersecurity platform for the modern enterprise.
         </p>
 
@@ -39,7 +38,7 @@ const Hero: React.FC = () => {
           Explore Our Tools
           <ArrowRight className="h-4 w-4" />
         </button>
-      </motion.div>
+      </div>
     </main>
   );
 };

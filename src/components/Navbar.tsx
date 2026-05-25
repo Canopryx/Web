@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
   return (
     <div
       className="fixed inset-x-0 top-5 z-50 mx-auto flex w-[94%] max-w-6xl items-center justify-center"
-      style={{ animation: 'slideDown 0.8s ease-out 0.2s both' }}
+      style={{ animation: 'slideDown 0.46s cubic-bezier(0.22, 1, 0.36, 1) 0s both' }}
     >
       <nav className="panel flex w-full flex-col gap-4 rounded-[28px] px-4 py-4 md:flex-row md:items-center md:justify-between md:rounded-full md:px-6 md:py-3">
         <button

@@ -12,10 +12,9 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ title, status, description, accent, index }) => (
   <article
-    className="panel relative flex h-full flex-col overflow-hidden px-7 py-7 transition-all duration-500 ease-out hover:-translate-y-1.5 hover:shadow-[0_22px_50px_rgba(16,82,51,0.14)]"
+    className="enter-after-nav panel relative flex h-full flex-col overflow-hidden px-7 py-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(16,82,51,0.1)]"
     style={{
-      opacity: 0,
-      animation: `fadeInUp 0.65s ease-out ${0.1 + index * 0.12}s forwards`,
+      ['--enter-delay' as string]: `${0.54 + index * 0.08}s`,
     }}
   >
     <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accent}`} />
@@ -33,8 +32,8 @@ const Products: React.FC = () => {
     <div className="relative">
       <section className="page-shell pt-36 md:pt-44">
         <div
-          className="mx-auto max-w-3xl text-center"
-          style={{ opacity: 0, animation: 'fadeInUp 0.7s ease-out 0s forwards' }}
+          className="enter-after-nav mx-auto max-w-3xl text-center"
+          style={{ ['--enter-delay' as string]: '0.42s' }}
         >
           <span className="eyebrow mx-auto">Product Lineup</span>
           <h1 className="mt-6 text-4xl font-semibold tracking-[-0.04em] text-[color:var(--color-text)] md:text-6xl">
