@@ -1,0 +1,15 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  index?: number;
+}
+
+const { title, description, index = 0 } = Astro.props;
+const delay = `${0.54 + index * 0.08}s`;
+---
+
+<article class="value-card panel reveal" style={`--enter-delay: ${delay};`}>
+  <h2 class="value-card__title">{title}</h2>
+  <p class="value-card__desc">{description}</p>
+</article>

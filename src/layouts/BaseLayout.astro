@@ -1,0 +1,54 @@
+---
+import "../styles/global.css";
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Olvara Labs",
+  description = "Olvara Labs — A next-generation cybersecurity platform engineering resilient, high-fidelity security frameworks for the modern enterprise.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7faf5" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..800&family=Plus+Jakarta+Sans:wght@300..800&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <ClientRouter />
+    <script is:inline>
+      function checkNavAnimation() {
+        if (sessionStorage.getItem('nav-animated')) {
+          document.documentElement.classList.add('nav-already-animated');
+        } else {
+          sessionStorage.setItem('nav-animated', 'true');
+        }
+      }
+      checkNavAnimation();
+      document.addEventListener('astro:after-swap', checkNavAnimation);
+    </script>
+  </head>
+  <body>
+    <!-- Background decoration -->
+    <div class="site-backdrop" aria-hidden="true">
+      <div class="site-backdrop__grid"></div>
+      <div class="site-backdrop__glow site-backdrop__glow--one"></div>
+      <div class="site-backdrop__glow site-backdrop__glow--two"></div>
+    </div>
+
+    <slot />
+  </body>
+</html>

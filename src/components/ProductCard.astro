@@ -1,0 +1,30 @@
+---
+interface Props {
+  title: string;
+  status: string;
+  description: string;
+  accentClass: string;
+  index?: number;
+}
+
+const { title, status, description, accentClass, index = 0 } = Astro.props;
+const delay = `${0.54 + index * 0.08}s`;
+---
+
+<article
+  class="product-card panel reveal"
+  style={`--enter-delay: ${delay};`}
+>
+  <div class={`product-card__accent ${accentClass}`}></div>
+
+  <slot name="icon" />
+
+  <h2 class="product-card__title">{title}</h2>
+
+  <p class="product-card__desc">{description}</p>
+
+  <div class="product-card__badge">
+    <span class="product-card__badge-dot"></span>
+    {status}
+  </div>
+</article>

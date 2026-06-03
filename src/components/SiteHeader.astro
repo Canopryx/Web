@@ -1,0 +1,87 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="navbar" id="main-nav" aria-label="Primary">
+  <a class="navbar__brand" href="/">
+    <img src="/logo.png" alt="Olvara Labs" class="navbar__logo" width="32" height="32" />
+    <div class="navbar__brand-text">
+      <span class="navbar__wordmark">Olvara</span>
+      <span class="navbar__tagline">labs</span>
+    </div>
+  </a>
+
+  <div class="navbar__links">
+    <a
+      class={`navbar__link ${currentPath === '/' ? 'navbar__link--active' : ''}`}
+      href="/"
+    >
+      Home
+    </a>
+    <a
+      class={`navbar__link ${currentPath === '/products' || currentPath === '/products/' ? 'navbar__link--active' : ''}`}
+      href="/products"
+    >
+      Products
+    </a>
+    <a
+      class={`navbar__link ${currentPath === '/about' || currentPath === '/about/' ? 'navbar__link--active' : ''}`}
+      href="/about"
+    >
+      About
+    </a>
+  </div>
+
+  <a class="navbar__cta" href="mailto:contact@olvaralabs.com" id="nav-contact-btn">
+    Contact
+  </a>
+
+  <button
+    class="navbar__toggle"
+    id="nav-toggle"
+    aria-label="Toggle navigation menu"
+    aria-expanded="false"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+</nav>
+
+<!-- Mobile nav overlay -->
+<div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+  <a class="mobile-nav__link" href="/" id="mobile-home-link">Home</a>
+  <a class="mobile-nav__link" href="/products" id="mobile-products-link">Products</a>
+  <a class="mobile-nav__link" href="/about" id="mobile-about-link">About</a>
+  <a class="mobile-nav__cta" href="mailto:contact@olvaralabs.com" id="mobile-contact-btn">Contact</a>
+</div>
+
+<script>
+  function initNav() {
+    const toggle = document.getElementById('nav-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    if (toggle && mobileNav) {
+      // Recreate toggle handler without duplicate listeners
+      const newToggle = toggle.cloneNode(true) as HTMLButtonElement;
+      toggle.parentNode?.replaceChild(newToggle, toggle);
+
+      newToggle.addEventListener('click', () => {
+        const isOpen = mobileNav.classList.toggle('is-open');
+        newToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNav.classList.remove('is-open');
+          newToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  }
+
+  initNav();
+  document.addEventListener('astro:page-load', initNav);
+</script>
