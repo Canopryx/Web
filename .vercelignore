@@ -1,4 +1,0 @@
-# Override .gitignore so Vercel includes the dist folder during deployment trace
-!dist
-!dist/
-!dist/**/*
