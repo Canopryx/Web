@@ -1,0 +1,234 @@
+---
+const circles = new Array(8).fill(1);
+---
+
+<div class="radar-feature">
+  <div class="radar-feature__nodes">
+    <!-- Row 1 -->
+    <div class="radar-feature__row">
+      <div class="radar-node" style="--delay: 0.2s">
+        <div class="radar-node__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <span class="radar-node__text">Zero Trust</span>
+      </div>
+      <div class="radar-node" style="--delay: 0.4s">
+        <div class="radar-node__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        </div>
+        <span class="radar-node__text">Air-Gapped</span>
+      </div>
+      <div class="radar-node" style="--delay: 0.3s">
+        <div class="radar-node__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-9 5 18 2-9h5"/></svg>
+        </div>
+        <span class="radar-node__text">Post-Quantum</span>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="radar-feature__row radar-feature__row--tight">
+      <div class="radar-node" style="--delay: 0.5s">
+        <div class="radar-node__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+        </div>
+        <span class="radar-node__text">Key Rotation</span>
+      </div>
+      <div class="radar-node" style="--delay: 0.8s">
+        <div class="radar-node__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </div>
+        <span class="radar-node__text">On-Premises</span>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="radar-feature__row">
+      <div class="radar-node" style="--delay: 0.6s">
+        <div class="radar-node__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        </div>
+        <span class="radar-node__text">Secure Enclave</span>
+      </div>
+      <div class="radar-node" style="--delay: 0.7s">
+        <div class="radar-node__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        </div>
+        <span class="radar-node__text">No Cloud DB</span>
+      </div>
+    </div>
+
+    <!-- Radar Background -->
+    <div class="radar-background">
+      <div class="radar-spin">
+        <div class="radar-sweep"></div>
+      </div>
+      {circles.map((_, idx) => (
+        <div 
+          class="radar-circle"
+          style={`height: ${(idx + 1) * 5.5}rem; width: ${(idx + 1) * 5.5}rem; border-color: rgba(29, 124, 73, ${0.35 - (idx + 1) * 0.04}); animation-delay: ${idx * 0.1}s;`}
+        ></div>
+      ))}
+    </div>
+    
+    <div class="radar-floor"></div>
+  </div>
+</div>
+
+<style>
+  .radar-feature {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 5rem;
+    padding: 2rem 1rem 6rem;
+    overflow: hidden;
+  }
+
+  .radar-feature__nodes {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    width: 100%;
+    max-width: 48rem;
+    min-height: 24rem;
+    z-index: 2;
+  }
+
+  .radar-feature__row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 1.5rem;
+    z-index: 10;
+  }
+  
+  .radar-feature__row--tight {
+    max-width: 32rem;
+  }
+
+  .radar-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: popIn 0.5s var(--ease-out) var(--delay) forwards;
+  }
+
+  .radar-node__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    background: var(--color-surface);
+    border: 1px solid rgba(29, 124, 73, 0.2);
+    box-shadow: 0 4px 12px rgba(29, 124, 73, 0.08), inset 0 2px 4px rgba(255,255,255,0.6);
+    color: var(--color-primary);
+  }
+
+  .radar-node__icon svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .radar-node__text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+
+  .radar-background {
+    position: absolute;
+    bottom: -6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20rem;
+    height: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .radar-spin {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    width: 400px;
+    height: 5px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transform-origin: right center;
+    animation: radarSpin 8s linear infinite;
+    z-index: 5;
+  }
+
+  .radar-sweep {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+  }
+
+  .radar-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid transparent;
+    opacity: 0;
+    animation: circleFadeIn 0.8s ease-out forwards;
+  }
+
+  .radar-floor {
+    position: absolute;
+    bottom: -1rem;
+    left: -20vw;
+    width: 140vw;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(29, 124, 73, 0.3), transparent);
+    z-index: 10;
+  }
+
+  @keyframes radarSpin {
+    from { transform: rotate(20deg); }
+    to { transform: rotate(380deg); }
+  }
+
+  @keyframes popIn {
+    0% { opacity: 0; transform: scale(0.8) translateY(15px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  @keyframes circleFadeIn {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  
+  @media (max-width: 640px) {
+    .radar-feature__row {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .radar-node__text {
+      display: none;
+    }
+  }
+</style>
