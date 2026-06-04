@@ -326,7 +326,7 @@ ol, ul, menu { list-style: none; }
 }
 
 .navbar__cta:hover::before {
-  animation: buttonShimmer 0.6s ease-out forwards;
+  animation: buttonShimmer 1.2s ease-out infinite;
 }
 
 @keyframes buttonShimmer {
