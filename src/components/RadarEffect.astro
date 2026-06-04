@@ -82,7 +82,7 @@ const circles = new Array(8).fill(1);
     align-items: center;
     width: 100%;
     margin-top: 5rem;
-    padding: 2rem 1rem 6rem;
+    padding: 2rem 1rem 0; /* Remove bottom padding to sit on footer */
     overflow: hidden;
   }
 
@@ -95,7 +95,8 @@ const circles = new Array(8).fill(1);
     gap: 3rem;
     width: 100%;
     max-width: 48rem;
-    min-height: 24rem;
+    min-height: 26rem; /* Make sure there is enough height for the top half of circles */
+    padding-bottom: 2rem; /* Keep nodes slightly above floor */
     z-index: 2;
   }
 
@@ -152,9 +153,9 @@ const circles = new Array(8).fill(1);
 
   .radar-background {
     position: absolute;
-    bottom: -6rem;
+    bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 50%); /* Moves the center of the radar exactly to the bottom line */
     width: 20rem;
     height: 20rem;
     display: flex;
@@ -198,11 +199,11 @@ const circles = new Array(8).fill(1);
 
   .radar-floor {
     position: absolute;
-    bottom: -1rem;
-    left: -20vw;
-    width: 140vw;
+    bottom: 0;
+    left: -50vw;
+    width: 200vw;
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(29, 124, 73, 0.3), transparent);
+    background: linear-gradient(to right, transparent, rgba(29, 124, 73, 0.4), transparent);
     z-index: 10;
   }
 
