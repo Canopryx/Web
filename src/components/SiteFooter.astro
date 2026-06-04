@@ -1,4 +1,10 @@
-<footer class="site-footer">
+---
+interface Props {
+  noMargin?: boolean;
+}
+const { noMargin = false } = Astro.props;
+---
+<footer class={`site-footer ${noMargin ? 'site-footer--no-margin' : ''}`}>
   <div class="page-shell">
     <div class="footer__inner">
       <!-- Brand column (1 part) – logo peeking from edge -->

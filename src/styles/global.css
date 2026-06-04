@@ -795,10 +795,8 @@ ol, ul, menu { list-style: none; }
   overflow: hidden;
 }
 
-/* Remove margins if the preceding element is the hero container or radar feature */
-main:has(.hero) + .site-footer,
-main:has(.radar-feature) + .site-footer {
-  margin-top: 0;
+.site-footer--no-margin {
+  margin-top: 0 !important;
 }
 
 .footer__inner {
