@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = "Olvara Labs",
-  description = "Olvara Labs - A cybersecurity platform engineering resilient, high-fidelity security frameworks for the modern enterprise.",
+  title = "Canopryx",
+  description = "Canopryx engineers resilient, high-fidelity security infrastructure for the modern enterprise.",
 } = Astro.props;
 ---
 
@@ -20,7 +20,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f7faf5" />
-    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,15 +30,19 @@ const {
     <title>{title}</title>
     <ClientRouter />
     <script is:inline>
-      function checkNavAnimation() {
-        if (sessionStorage.getItem('nav-animated')) {
-          document.documentElement.classList.add('nav-already-animated');
-        } else {
-          sessionStorage.setItem('nav-animated', 'true');
+      function syncNavAnimation() {
+        try {
+          if (sessionStorage.getItem('nav-animated')) {
+            document.documentElement.classList.add('nav-already-animated');
+          } else {
+            sessionStorage.setItem('nav-animated', 'true');
+          }
+        } catch {
+          // Storage can be unavailable in privacy-restricted browsing contexts.
         }
       }
-      checkNavAnimation();
-      document.addEventListener('astro:after-swap', checkNavAnimation);
+      syncNavAnimation();
+      document.addEventListener('astro:after-swap', syncNavAnimation);
     </script>
   </head>
   <body>

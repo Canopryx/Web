@@ -23,22 +23,22 @@ const values = [
 ---
 
 <BaseLayout
-  title="About - Olvara Labs"
-  description="Learn about Olvara Labs - building modern cybersecurity tools with a cleaner and more deliberate public presence."
+  title="About - Canopryx"
+  description="Learn about Canopryx — building modern cybersecurity tools with a cleaner and more deliberate public presence."
 >
   <SiteHeader />
 
   <main>
-    <section class="about page-shell" style="padding-top: 9rem; padding-bottom: 0;">
+    <section class="about page-shell">
       <div class="about__header">
 
-        <h1 class="about__title enter-after-nav" style="--enter-delay: 0.5s;">About Olvara Labs</h1>
+        <h1 class="about__title enter-after-nav" style="--enter-delay: 0.5s;">About Canopryx</h1>
         <p class="about__subtitle enter-after-nav" style="--enter-delay: 0.58s;">
           Building modern cybersecurity tools with a cleaner and more deliberate public&nbsp;presence.
         </p>
       </div>
 
-      <div class="about__grid">
+      <div class="about__grid" id="principles">
         {values.map((value, i) => (
           <ValueCard
             title={value.title}

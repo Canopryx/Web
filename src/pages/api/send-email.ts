@@ -5,24 +5,32 @@ import { Resend } from 'resend';
 import { z } from 'zod';
 
 const blockedDomains = ['example.com', 'test.com', 'spam.com', 'fake.com', 'tempmail.com', 'mailinator.com'];
-const blockedNames = ['robot', 'hacker', 'bot', 'test', 'spam', 'script', 'fuck', 'shit', 'bitch', 'cunt', 'asshole', 'dick', 'pussy'];
+const contactRecipient = 'yaseenzaman1312@proton.me';
 
 const contactSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100, "Name is too long").refine((val) => {
-    const lower = val.toLowerCase();
-    return !blockedNames.some(blocked => lower.includes(blocked));
-  }, "Please provide a valid name."),
-  email: z.string().email("Invalid email address").max(100, "Email is too long").refine((val) => {
+  name: z.string().trim().min(1, "Name is required").max(100, "Name is too long"),
+  email: z.email("Invalid email address").max(100, "Email is too long").refine((val) => {
     const domain = val.split('@')[1]?.toLowerCase();
-    return domain && !blockedDomains.includes(domain);
+    return Boolean(domain && !blockedDomains.includes(domain));
   }, "Please use a valid email address. Dummy domains are not permitted."),
-  subject: z.string().max(150, "Subject is too long").optional(),
-  message: z.string().min(1, "Message is required").max(2000, "Message is too long"),
+  subject: z.string().trim().max(150, "Subject is too long").refine(
+    (value) => !/[\r\n]/.test(value),
+    "Subject contains invalid characters",
+  ).optional(),
+  message: z.string().trim().min(1, "Message is required").max(2000, "Message is too long"),
 });
 
-function escapeHtml(unsafe: string) {
-  if (!unsafe) return "";
-  return unsafe
+const jsonResponse = (body: Record<string, unknown>, status: number) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+    },
+  });
+
+function escapeHtml(value: string) {
+  return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -31,38 +39,34 @@ function escapeHtml(unsafe: string) {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  // Initialize Resend inside the request handler to ensure env vars are loaded.
-  // We check both process.env (Vercel Node.js standard) and import.meta.env (Astro Dev Server).
   const apiKey = (typeof process !== 'undefined' ? process.env.RESEND_API_KEY : undefined) || import.meta.env.RESEND_API_KEY;
-  const resend = new Resend(apiKey);
+
+  if (!apiKey) {
+    console.error('Contact email service is not configured.');
+    return jsonResponse({ error: 'Email service is temporarily unavailable.' }, 503);
+  }
 
   try {
-    const rawData = await request.json();
+    const rawData: unknown = await request.json();
     const parsed = contactSchema.safeParse(rawData);
 
     if (!parsed.success) {
       const errorMsg = parsed.error.issues.map(i => i.message).join(", ");
-      return new Response(JSON.stringify({ error: errorMsg }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return jsonResponse({ error: errorMsg }, 400);
     }
 
     const { name, email, subject, message } = parsed.data;
 
-    // Sanitize inputs to prevent XSS
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
     const safeSubject = subject ? escapeHtml(subject) : 'N/A';
     const safeMessage = escapeHtml(message);
 
-    // Attempt to send email
+    const resend = new Resend(apiKey);
     const { data: resendData, error } = await resend.emails.send({
-      // Resend provides a testing domain (onboarding@resend.dev) out of the box,
-      // but to send to addresses other than your verified domain in production,
-      // you will need to add a domain to Resend.
-      from: 'Olvara Contact Form <onboarding@resend.dev>',
-      to: ['olvaralabs@proton.me'],
+      from: 'Canopryx Contact Form <onboarding@resend.dev>',
+      to: [contactRecipient],
+      replyTo: email,
       subject: `New Contact Request: ${subject || 'No Subject'}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
@@ -79,21 +83,12 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (error) {
       console.error('Resend Error:', error);
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return jsonResponse({ error: 'We could not send your message. Please try again.' }, 502);
     }
 
-    return new Response(JSON.stringify({ success: true, data: resendData }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
-  } catch (e: any) {
-    console.error('API Error:', e);
-    return new Response(JSON.stringify({ error: e.message || 'Internal Server Error' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return jsonResponse({ success: true, id: resendData?.id }, 200);
+  } catch (error: unknown) {
+    console.error('Contact API error:', error);
+    return jsonResponse({ error: 'Unable to process your request.' }, 500);
   }
 };

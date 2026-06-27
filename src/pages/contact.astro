@@ -6,13 +6,13 @@ import ScrollReveal from "../components/ScrollReveal.astro";
 ---
 
 <BaseLayout
-  title="Contact - Olvara Labs"
-  description="Get in touch with Olvara Labs to discuss securing your operations."
+  title="Contact - Canopryx"
+  description="Get in touch with Canopryx to discuss securing your operations."
 >
   <SiteHeader />
 
   <main>
-    <section class="contact page-shell" style="padding-top: 9rem; padding-bottom: 4rem; min-height: 100vh; display: flex; align-items: center;">
+    <section class="contact page-shell">
       <div class="contact__grid">
         <div class="contact__header enter-after-nav" style="--enter-delay: 0.5s;">
           <h1 class="contact__title">Get in Touch</h1>
@@ -23,31 +23,31 @@ import ScrollReveal from "../components/ScrollReveal.astro";
 
         <div class="contact__content enter-after-nav" style="--enter-delay: 0.66s;">
           <div class="contact__form-wrapper panel">
-          <form id="contact-form" class="contact-form">
+          <form id="contact-form" class="contact-form" novalidate>
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" id="name" name="name" required placeholder="John Doe" />
+              <input type="text" id="name" name="name" required maxlength="100" autocomplete="name" placeholder="John Doe" />
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" required placeholder="john@example.com" />
+              <input type="email" id="email" name="email" required maxlength="100" autocomplete="email" placeholder="john@example.com" />
             </div>
             <div class="form-group">
               <label for="subject">Subject</label>
-              <input type="text" id="subject" name="subject" required placeholder="How can we help?" />
+              <input type="text" id="subject" name="subject" maxlength="150" placeholder="How can we help?" />
             </div>
             <div class="form-group">
               <label for="message">Message</label>
-              <textarea id="message" name="message" rows="5" required placeholder="Tell us about your needs..."></textarea>
+              <textarea id="message" name="message" rows="5" required maxlength="2000" placeholder="Tell us about your needs..."></textarea>
             </div>
-            <button type="submit" class="btn-primary" id="submit-btn" style="width: 100%; justify-content: center;">
+            <button type="submit" class="contact-form__submit btn-primary" id="submit-btn">
               <span id="btn-text">Send Message</span>
-              <svg id="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left: 0.5rem;">
+              <svg id="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
               </svg>
-              <div id="btn-spinner" class="spinner hidden"></div>
+              <span id="btn-spinner" class="spinner hidden" aria-hidden="true"></span>
             </button>
-            <div id="form-status" class="form-status hidden"></div>
+            <div id="form-status" class="form-status hidden" role="status" aria-live="polite"></div>
           </form>
         </div>
       </div>
@@ -60,6 +60,13 @@ import ScrollReveal from "../components/ScrollReveal.astro";
 </BaseLayout>
 
 <style>
+  .contact {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-block: 9rem 4rem;
+  }
+
   .contact__grid {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -100,6 +107,15 @@ import ScrollReveal from "../components/ScrollReveal.astro";
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+  }
+
+  .contact-form__submit {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #btn-icon {
+    margin-left: 0.5rem;
   }
 
   .form-group {
@@ -203,9 +219,18 @@ import ScrollReveal from "../components/ScrollReveal.astro";
   const btnSpinner = document.getElementById('btn-spinner');
   const formStatus = document.getElementById('form-status');
 
-  if (form) {
+  interface ContactResponse {
+    error?: string;
+  }
+
+  const getErrorMessage = (error: unknown) =>
+    error instanceof Error ? error.message : 'An error occurred. Please try again later.';
+
+  if (form && submitBtn) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      if (!form.reportValidity()) return;
       
       // Update UI to loading state
       submitBtn.disabled = true;
@@ -231,7 +256,7 @@ import ScrollReveal from "../components/ScrollReveal.astro";
 
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.indexOf("application/json") !== -1) {
-          const result = await response.json();
+          const result = await response.json() as ContactResponse;
           if (response.ok) {
             // Success
             form.reset();
@@ -248,10 +273,10 @@ import ScrollReveal from "../components/ScrollReveal.astro";
           // Server returned non-JSON (e.g. 500 error page)
           throw new Error('A server error occurred. Please make sure the API key is set.');
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         // Error handling
         if (formStatus) {
-          formStatus.textContent = error.message || 'An error occurred. Please try again later.';
+          formStatus.textContent = getErrorMessage(error);
           formStatus.classList.add('error');
           formStatus.classList.remove('hidden');
         }

@@ -1,6 +1,6 @@
-# Olvara Labs Web
+# Canopryx Web
 
-Fresh Astro baseline for rebuilding the Olvara Labs website from scratch.
+Astro website for Canopryx.
 
 ## Stack
 
@@ -24,11 +24,12 @@ public/
 ```bash
 bun install
 bun run dev
+bun run check
 bun run build
 bun run preview
 ```
 
 ## Notes
 
-- The existing Vite SPA has been removed.
-- This scaffold is intentionally minimal so the new site architecture can be built cleanly.
+- Bun is the only supported package manager; `bun.lock` is the source of truth.
+- Astro performs strict TypeScript checks before every production build.

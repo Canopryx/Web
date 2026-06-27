@@ -1,5 +1,5 @@
 /* ────────────────────────────────────────────
-   Olvara Labs – Design System
+   Canopryx – Design System
    ──────────────────────────────────────────── */
 
 /* ── Tokens ─────────────────────────────── */
@@ -60,6 +60,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   overflow-x: hidden;
+}
+
+body.nav-open {
+  overflow: hidden;
 }
 
 body::before {
@@ -253,15 +257,6 @@ ol, ul, menu { list-style: none; }
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-text);
-}
-
-.navbar__tagline {
-  font-size: 0.52rem;
-  font-weight: 600;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  margin-top: 0.1rem;
 }
 
 .navbar__links {
@@ -624,7 +619,7 @@ ol, ul, menu { list-style: none; }
 
 /* ── Products Section ───────────────────── */
 .products {
-  padding: 3.5rem 0 4rem;
+  padding: 9rem 0 4rem;
   min-height: 100vh;
 }
 
@@ -737,7 +732,7 @@ ol, ul, menu { list-style: none; }
 
 /* ── About / Values Section ─────────────── */
 .about {
-  padding: 3.5rem 0 4rem;
+  padding: 9rem 0 0;
   min-height: 100vh;
 }
 
@@ -767,6 +762,7 @@ ol, ul, menu { list-style: none; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+  scroll-margin-top: 7rem;
 }
 
 .value-card {
@@ -888,37 +884,6 @@ ol, ul, menu { list-style: none; }
   transform: translateY(-1px);
 }
 
-.footer__socials {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: auto;
-  justify-content: flex-end;
-}
-
-.footer__social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: var(--radius-pill);
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.6);
-  transition: background 0.15s, color 0.15s, transform 0.2s;
-}
-
-.footer__social-link:hover {
-  background: rgba(255,255,255,0.15);
-  color: var(--color-white);
-  transform: translateY(-2px);
-}
-
-.footer__social-link svg {
-  width: 1.1rem;
-  height: 1.1rem;
-  fill: currentColor;
-}
-
 .footer__bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
   padding: 1.5rem 0;
@@ -1005,10 +970,6 @@ ol, ul, menu { list-style: none; }
 
   .footer__cta-label {
     text-align: left;
-  }
-
-  .footer__socials {
-    justify-content: flex-start;
   }
 
   .footer__bottom {

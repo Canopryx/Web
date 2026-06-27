@@ -1,0 +1,156 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+
+const sections = [
+  { id: "who-we-are", label: "Who we are" },
+  { id: "scope", label: "Scope" },
+  { id: "information-we-collect", label: "Information we collect" },
+  { id: "information-we-avoid", label: "Information we do not intend to collect" },
+  { id: "how-we-use-information", label: "How we use information" },
+  { id: "legal-basis", label: "Legal basis" },
+  { id: "sharing", label: "How we share information" },
+  { id: "cookies", label: "Cookies" },
+  { id: "retention", label: "Data retention" },
+  { id: "security", label: "Security" },
+  { id: "on-premises-data", label: "On-premises customer data" },
+  { id: "international-transfers", label: "International transfers" },
+  { id: "children", label: "Children's privacy" },
+  { id: "your-rights", label: "Your rights" },
+  { id: "grievances", label: "Grievance contact" },
+  { id: "incidents", label: "Security incidents" },
+  { id: "third-party-links", label: "Third-party links" },
+  { id: "changes", label: "Changes to this policy" },
+  { id: "contact", label: "Contact us" },
+];
+---
+
+<LegalLayout
+  title="Privacy Policy"
+  description="How Canopryx collects, uses, stores, shares, and protects personal information when you use our website or contact us."
+  updated="June 27, 2026"
+  sections={sections}
+>
+  <section id="who-we-are">
+    <h2>1. Who we are</h2>
+    <p>Canopryx builds cybersecurity products for organizations operating in regulated and high-trust environments. Our platform is designed to be on-premises only, air-gap capable, zero-knowledge by design, and built with hybrid classical and post-quantum encryption.</p>
+    <p>For privacy-related questions, email <a href="mailto:privacy@canopryx.com">privacy@canopryx.com</a>.</p>
+  </section>
+
+  <section id="scope">
+    <h2>2. Scope of this policy</h2>
+    <p>This policy applies to personal information processed through:</p>
+    <ul>
+      <li>The Canopryx website, contact forms, and enquiry forms.</li>
+      <li>Email and other business communications with us.</li>
+      <li>Design partner, early access, pilot, partnership, or product evaluation discussions.</li>
+    </ul>
+    <p>This policy does not govern customer-controlled data processed inside an on-premises Canopryx deployment unless a separate written agreement says otherwise. Product-specific data handling, deployment, support, and confidentiality terms are governed by the applicable written agreement.</p>
+  </section>
+
+  <section id="information-we-collect">
+    <h2>3. Information we collect</h2>
+    <h3>Information you provide</h3>
+    <p>When you contact us or submit a form, we may collect your name, email address, organization, role, enquiry subject, message, business requirements, design partner interest, and other information you voluntarily provide.</p>
+    <h3>Technical website information</h3>
+    <p>We or our hosting and infrastructure providers may automatically process limited technical information such as IP address, browser and device type, operating system, referring page, pages visited, access time, and basic logs used for security, debugging, performance, and abuse prevention.</p>
+    <h3>Communications and evaluation information</h3>
+    <p>We may retain email correspondence, meeting notes, contact history, enquiry context, follow-up preferences, organization type, industry, high-level security or deployment requirements, evaluation timelines, and procurement or stakeholder details.</p>
+    <p class="legal-callout"><strong>Do not send secrets.</strong> Do not submit passwords, credentials, private keys, access tokens, classified information, regulated data, or sensitive operational information through our public forms or ordinary email.</p>
+  </section>
+
+  <section id="information-we-avoid">
+    <h2>4. Information we do not intend to collect</h2>
+    <p>Our public website is not designed to collect production passwords, secrets, private keys, API tokens, customer vault contents, classified information, sensitive operational data, regulated records, full internal architecture diagrams, or incident details containing live credentials or exploitable information.</p>
+    <p>If you submit such information accidentally, contact us immediately. We will take reasonable steps to delete it where legally and technically possible.</p>
+  </section>
+
+  <section id="how-we-use-information">
+    <h2>5. How we use information</h2>
+    <p>We may use personal information to:</p>
+    <ul>
+      <li>Respond to enquiries and communicate with potential customers, partners, and design partners.</li>
+      <li>Evaluate design partner suitability and schedule calls, demos, or discussions.</li>
+      <li>Provide company, product, or roadmap information.</li>
+      <li>Improve website performance, reliability, and security.</li>
+      <li>Prevent abuse, spam, malicious activity, or unauthorized access.</li>
+      <li>Maintain business records and comply with legal, regulatory, contractual, or security obligations.</li>
+      <li>Protect the rights, safety, and interests of Canopryx, our users, customers, and third parties.</li>
+    </ul>
+  </section>
+
+  <section id="legal-basis">
+    <h2>6. Legal basis for processing</h2>
+    <p>Depending on applicable law, we process personal information based on consent, legitimate business interests, steps taken before entering into a contract, performance of a contract, compliance with legal obligations, and security, fraud prevention, or protection of rights. Where consent is required, you may withdraw it as permitted by applicable law.</p>
+  </section>
+
+  <section id="sharing">
+    <h2>7. How we share information</h2>
+    <p><strong>We do not sell personal information.</strong></p>
+    <p>We may share limited personal information with website hosting, email, communications, security, infrastructure, and logging providers; professional advisors; contractors who help operate our business; authorities where legally required; and relevant parties to a merger, acquisition, restructuring, investment, or asset transfer.</p>
+    <p>Service providers are expected to process information only for authorized purposes and with appropriate safeguards.</p>
+  </section>
+
+  <section id="cookies">
+    <h2>8. Cookies and similar technologies</h2>
+    <p>The website may use essential cookies or similar technologies required for basic functionality, security, performance, or abuse prevention. If we introduce analytics, advertising, tracking, or other non-essential cookies, we will update this policy and provide consent choices where required.</p>
+    <p>You can manage cookies through your browser settings. Blocking some cookies may affect website functionality.</p>
+  </section>
+
+  <section id="retention">
+    <h2>9. Data retention</h2>
+    <p>We retain personal information only as long as reasonably necessary to respond to enquiries, manage business communications, evaluate design partner requests, maintain legal and security records, comply with applicable laws, resolve disputes, and enforce agreements.</p>
+    <p>Retention periods vary by the information and processing purpose. When information is no longer required, we will delete or anonymize it, or retain it securely where applicable law requires.</p>
+  </section>
+
+  <section id="security">
+    <h2>10. Security</h2>
+    <p>We use reasonable technical, organizational, and administrative safeguards to protect personal information. No website, email system, network, or online transmission method is completely secure. You are responsible for not submitting sensitive secrets, credentials, regulated data, or confidential operational information through public or unsecured channels.</p>
+  </section>
+
+  <section id="on-premises-data">
+    <h2>11. On-premises product and customer-controlled data</h2>
+    <p>Canopryx is building an on-premises, air-gap capable platform. In those deployments, customer vault data, credentials, secrets, and sensitive operational data are intended to remain under the customer's control in the customer's environment.</p>
+    <p>Unless a separate agreement says otherwise, Canopryx does not require access to customer vault contents for website or ordinary business enquiries. Any support, diagnostics, pilot evaluation, or design partner collaboration involving logs or technical information should define scope, method, security controls, and confidentiality obligations in a separate agreement.</p>
+  </section>
+
+  <section id="international-transfers">
+    <h2>12. International transfers</h2>
+    <p>Depending on the hosting, communication, and service providers we use, personal information may be processed outside your location. Where applicable law requires, we will use appropriate safeguards for international transfers.</p>
+  </section>
+
+  <section id="children">
+    <h2>13. Children's privacy</h2>
+    <p>The website is intended for business and professional audiences. It is not directed to children, and we do not knowingly collect personal information from children. If you believe a child has provided information to us, contact us so we can take appropriate steps.</p>
+  </section>
+
+  <section id="your-rights">
+    <h2>14. Your rights</h2>
+    <p>Depending on applicable law, you may have the right to access, correct, or request deletion of your personal information; withdraw consent; object to or restrict certain processing; request information about our use of your information; or raise a privacy complaint.</p>
+    <p>To exercise a right, email <a href="mailto:privacy@canopryx.com">privacy@canopryx.com</a>. We may need to verify your identity, and some requests may be limited by legal, security, contractual, or technical requirements.</p>
+  </section>
+
+  <section id="grievances">
+    <h2>15. Grievance contact</h2>
+    <p>For privacy concerns, data requests, or complaints, contact the Canopryx Privacy Team at <a href="mailto:privacy@canopryx.com">privacy@canopryx.com</a>. We will respond within a reasonable period and in accordance with applicable law.</p>
+  </section>
+
+  <section id="incidents">
+    <h2>16. Data breaches and security incidents</h2>
+    <p>If we become aware of a security incident affecting personal information processed by Canopryx, we will assess it and take appropriate steps based on the nature of the data, risk, applicable law, and contractual obligations. For customer-controlled on-premises deployments, incident responsibilities may be governed by separate agreements.</p>
+  </section>
+
+  <section id="third-party-links">
+    <h2>17. Third-party links</h2>
+    <p>The website may link to third-party websites, repositories, social media platforms, or services. We are not responsible for their privacy practices, security, or content. Review their privacy policies before using them.</p>
+  </section>
+
+  <section id="changes">
+    <h2>18. Changes to this policy</h2>
+    <p>We may update this policy from time to time. We will post the updated version on this page and revise the “Last updated” date. Your continued use of the website after a change is posted means you acknowledge the updated policy.</p>
+  </section>
+
+  <section id="contact">
+    <h2>19. Contact us</h2>
+    <p>For privacy questions or data requests, email <a href="mailto:privacy@canopryx.com">privacy@canopryx.com</a>. For legal enquiries, email <a href="mailto:legal@canopryx.com">legal@canopryx.com</a>.</p>
+  </section>
+</LegalLayout>

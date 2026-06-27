@@ -1,4 +1,4 @@
-Generate a simple, Minimalistic Landing page for Olvara Labs
+Generate a simple, minimalistic landing page for Canopryx
 
 It has to be a sleek looking, aesthetic website tho.
 

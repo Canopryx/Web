@@ -4,10 +4,9 @@ const currentPath = Astro.url.pathname;
 
 <nav class="navbar" id="main-nav" aria-label="Primary">
   <a class="navbar__brand" href="/">
-    <img src="/logo.png" alt="Olvara Labs" class="navbar__logo" width="32" height="32" />
+    <img src="/logo.png" alt="" class="navbar__logo" width="32" height="32" />
     <div class="navbar__brand-text">
-      <span class="navbar__wordmark">Olvara</span>
-      <span class="navbar__tagline">labs</span>
+      <span class="navbar__wordmark">Canopryx</span>
     </div>
   </a>
 
@@ -41,6 +40,7 @@ const currentPath = Astro.url.pathname;
     id="nav-toggle"
     aria-label="Toggle navigation menu"
     aria-expanded="false"
+    aria-controls="mobile-nav"
   >
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <line x1="3" y1="6" x2="21" y2="6" />
@@ -51,7 +51,7 @@ const currentPath = Astro.url.pathname;
 </nav>
 
 <!-- Mobile nav overlay -->
-<div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+<div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
   <a class="mobile-nav__link" href="/" id="mobile-home-link">Home</a>
   <a class="mobile-nav__link" href="/products" id="mobile-products-link">Products</a>
   <a class="mobile-nav__link" href="/about" id="mobile-about-link">About</a>
@@ -60,25 +60,29 @@ const currentPath = Astro.url.pathname;
 
 <script>
   function initNav() {
-    const toggle = document.getElementById('nav-toggle');
+    const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
     const mobileNav = document.getElementById('mobile-nav');
 
     if (toggle && mobileNav) {
-      // Recreate toggle handler without duplicate listeners
-      const newToggle = toggle.cloneNode(true) as HTMLButtonElement;
-      toggle.parentNode?.replaceChild(newToggle, toggle);
+      const setOpen = (isOpen: boolean) => {
+        mobileNav.classList.toggle('is-open', isOpen);
+        mobileNav.setAttribute('aria-hidden', String(!isOpen));
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        document.body.classList.toggle('nav-open', isOpen);
+      };
 
-      newToggle.addEventListener('click', () => {
-        const isOpen = mobileNav.classList.toggle('is-open');
-        newToggle.setAttribute('aria-expanded', String(isOpen));
-      });
+      toggle.onclick = () => setOpen(!mobileNav.classList.contains('is-open'));
 
       mobileNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileNav.classList.remove('is-open');
-          newToggle.setAttribute('aria-expanded', 'false');
-        });
+        (link as HTMLAnchorElement).onclick = () => setOpen(false);
       });
+
+      document.onkeydown = (event) => {
+        if (event.key === 'Escape' && mobileNav.classList.contains('is-open')) {
+          setOpen(false);
+          toggle.focus();
+        }
+      };
     }
   }
 

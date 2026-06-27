@@ -1,0 +1,152 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+
+const sections = [
+  { id: "about", label: "About Canopryx" },
+  { id: "scope", label: "Scope" },
+  { id: "product-status", label: "Product status" },
+  { id: "no-credential-storage", label: "No credential storage" },
+  { id: "acceptable-use", label: "Acceptable use" },
+  { id: "security-research", label: "Security research" },
+  { id: "intellectual-property", label: "Intellectual property" },
+  { id: "feedback", label: "Feedback" },
+  { id: "design-partners", label: "Design partners" },
+  { id: "third-party-links", label: "Third-party links" },
+  { id: "security-statements", label: "Security statements" },
+  { id: "no-advice", label: "No professional advice" },
+  { id: "disclaimers", label: "Disclaimers" },
+  { id: "liability", label: "Limitation of liability" },
+  { id: "indemnity", label: "Indemnity" },
+  { id: "restriction", label: "Suspension or restriction" },
+  { id: "website-changes", label: "Website changes" },
+  { id: "terms-changes", label: "Changes to these terms" },
+  { id: "governing-law", label: "Governing law" },
+  { id: "contact", label: "Contact" },
+];
+---
+
+<LegalLayout
+  title="Terms of Service"
+  description="The terms governing access to the Canopryx website, materials, forms, and related online communications."
+  updated="June 27, 2026"
+  sections={sections}
+>
+  <section id="about">
+    <h2>1. About Canopryx</h2>
+    <p>Canopryx is building on-premises security infrastructure for organizations that need full control over credentials, secrets, and sensitive operational data.</p>
+    <p>Our platform is designed for regulated and high-trust environments and is currently in active development. It is available only to a limited number of design partners ahead of general availability.</p>
+  </section>
+
+  <section id="scope">
+    <h2>2. Scope of these terms</h2>
+    <p>These terms apply to your use of the Canopryx website, public pages, forms, communications, product descriptions, technical materials, roadmap references, and other website content.</p>
+    <p>They do not replace a signed pilot, design partner, enterprise license, non-disclosure, service, purchase, or other written agreement with Canopryx. If these terms conflict with a signed written agreement, the signed agreement controls.</p>
+  </section>
+
+  <section id="product-status">
+    <h2>3. Product status and availability</h2>
+    <p>Products are in active development. Product descriptions, features, security capabilities, roadmap items, design partner references, and timelines are informational only. We may add, remove, modify, delay, or discontinue any product, feature, design, architecture, capability, or roadmap item.</p>
+    <p>Nothing on this website guarantees that a product or feature will become generally available, suit a specific use case, or meet a particular regulatory, operational, or security requirement.</p>
+  </section>
+
+  <section id="no-credential-storage">
+    <h2>4. No cloud credential storage through this website</h2>
+    <p>Our public website is not intended to collect, store, process, or manage production credentials, passwords, secrets, encryption keys, access tokens, classified material, or sensitive operational data.</p>
+    <p class="legal-callout"><strong>Do not submit sensitive data.</strong> Do not send passwords, secrets, private keys, access tokens, regulated data, classified information, or production credentials through public forms, email, or unsecured communication channels.</p>
+    <p>Product access, deployment, security obligations, confidentiality, support, and data handling for design partners or customers will be governed by a separate written agreement.</p>
+  </section>
+
+  <section id="acceptable-use">
+    <h2>5. Acceptable use</h2>
+    <p>You agree not to use the website to:</p>
+    <ul>
+      <li>Violate applicable law, regulation, or a third party's rights.</li>
+      <li>Attempt unauthorized access to a system, account, repository, server, infrastructure, or network.</li>
+      <li>Probe, scan, test, overload, disrupt, or interfere with the website or related infrastructure without written authorization.</li>
+      <li>Submit malicious code, exploit payloads, spam, phishing content, deceptive requests, or abusive communications.</li>
+      <li>Misrepresent your identity, organization, authority, or relationship with another party.</li>
+      <li>Copy, scrape, harvest, or reuse content in violation of these terms or applicable law.</li>
+      <li>Submit confidential, classified, regulated, or sensitive information without an appropriate agreement and secure channel.</li>
+    </ul>
+  </section>
+
+  <section id="security-research">
+    <h2>6. Security research and responsible disclosure</h2>
+    <p>We value responsible security research. You may not perform intrusive testing, exploitation, denial-of-service testing, social engineering, physical attacks, credential attacks, or testing against third-party infrastructure without written authorization.</p>
+    <p>Report suspected security issues to <a href="mailto:security@canopryx.com">security@canopryx.com</a>. Include a clear description, affected component, safe reproduction steps, potential impact, and your contact information.</p>
+  </section>
+
+  <section id="intellectual-property">
+    <h2>7. Intellectual property</h2>
+    <p>The website, brand assets, text, graphics, product descriptions, interface elements, logos, designs, code, technical materials, and other content are owned by Canopryx or its licensors and protected by applicable intellectual property laws.</p>
+    <p>You may use the website for informational and business evaluation purposes only. Unless expressly permitted in writing, you may not copy, modify, distribute, sell, sublicense, reverse engineer, or create derivative works from its content. Canopryx names, marks, logos, and brand elements may not be used without prior written permission.</p>
+  </section>
+
+  <section id="feedback">
+    <h2>8. Feedback and suggestions</h2>
+    <p>If you provide feedback, suggestions, ideas, feature requests, security comments, or other input, you grant Canopryx a worldwide, royalty-free, perpetual, irrevocable right to use, modify, incorporate, and commercialize that feedback without restriction or compensation. Do not include confidential information unless a separate agreement covers it.</p>
+  </section>
+
+  <section id="design-partners">
+    <h2>9. Design partner enquiries</h2>
+    <p>Submitting an enquiry does not guarantee selection, access, partnership, product availability, support, commercial terms, or a future relationship. Participation may require qualification, legal review, security requirements, confidentiality obligations, and additional written agreements.</p>
+  </section>
+
+  <section id="third-party-links">
+    <h2>10. Third-party links</h2>
+    <p>The website may link to third-party websites, platforms, repositories, social media pages, or services that Canopryx does not control. We are not responsible for their content, policies, security, availability, accuracy, or practices. Their own terms and policies govern your use.</p>
+  </section>
+
+  <section id="security-statements">
+    <h2>11. Security and cryptography statements</h2>
+    <p>Descriptions of zero-knowledge architecture, on-premises deployment, air-gap capability, hybrid classical and post-quantum encryption, and other security features are informational. They do not create a warranty, certification, compliance guarantee, or promise of absolute protection.</p>
+    <p>Your organization remains responsible for deployment decisions, access control, key management, endpoint security, backups, regulatory obligations, operational procedures, and security governance.</p>
+  </section>
+
+  <section id="no-advice">
+    <h2>12. No professional advice</h2>
+    <p>Website information is general and does not constitute legal, compliance, cybersecurity, procurement, risk management, regulatory, or other professional advice. Consult qualified professionals before making decisions involving regulated systems, critical infrastructure, sensitive data, or security architecture.</p>
+  </section>
+
+  <section id="disclaimers">
+    <h2>13. Disclaimers</h2>
+    <p>The website and its content are provided “as is” and “as available.” To the maximum extent permitted by law, Canopryx disclaims express and implied warranties, including warranties of accuracy, availability, reliability, merchantability, fitness for a particular purpose, non-infringement, security, and uninterrupted operation.</p>
+    <p>We do not warrant that the website will be error-free, secure, continuously available, free from harmful components, or suitable for your intended use.</p>
+  </section>
+
+  <section id="liability">
+    <h2>14. Limitation of liability</h2>
+    <p>To the maximum extent permitted by law, Canopryx and its founders, employees, contractors, partners, affiliates, and representatives will not be liable for indirect, incidental, special, consequential, exemplary, or punitive damages, including loss of profits, revenue, opportunity, goodwill, data, systems, credentials, secrets, or operational continuity.</p>
+    <p>To the maximum extent permitted by law, Canopryx's total liability for a claim related to the website or these terms will not exceed the amount you paid Canopryx for access to the website during the twelve months before the claim. Some jurisdictions do not allow certain exclusions or limitations, so they may not apply to you.</p>
+  </section>
+
+  <section id="indemnity">
+    <h2>15. Indemnity</h2>
+    <p>You agree to defend, indemnify, and hold harmless Canopryx from claims, damages, liabilities, losses, costs, and expenses arising from your use or misuse of the website; violation of these terms, applicable law, or third-party rights; information you submit; or unauthorized testing, scanning, exploitation, or misuse of Canopryx systems.</p>
+  </section>
+
+  <section id="restriction">
+    <h2>16. Suspension or restriction</h2>
+    <p>We may restrict, block, suspend, or terminate access if we believe your use violates these terms, creates risk, disrupts operations, affects security, or may expose Canopryx or others to liability.</p>
+  </section>
+
+  <section id="website-changes">
+    <h2>17. Changes to the website</h2>
+    <p>We may update, modify, remove, or discontinue any part of the website without notice. We are not responsible for impacts caused by website changes, downtime, content updates, or discontinued pages.</p>
+  </section>
+
+  <section id="terms-changes">
+    <h2>18. Changes to these terms</h2>
+    <p>We may update these terms from time to time. We will post the updated version on this page and revise the “Last updated” date. Continued use after changes are posted means you accept the updated terms.</p>
+  </section>
+
+  <section id="governing-law">
+    <h2>19. Governing law and disputes</h2>
+    <p>These terms are governed by the laws of India unless a separate written agreement states otherwise. Subject to applicable law, courts located in Hyderabad, Telangana, India will have exclusive jurisdiction over disputes arising from these terms or your use of the website.</p>
+  </section>
+
+  <section id="contact">
+    <h2>20. Contact</h2>
+    <p>For questions about these terms, email <a href="mailto:legal@canopryx.com">legal@canopryx.com</a>.</p>
+  </section>
+</LegalLayout>
