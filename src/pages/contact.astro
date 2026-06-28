@@ -40,6 +40,10 @@ import ScrollReveal from "../components/ScrollReveal.astro";
               <label for="message">Message</label>
               <textarea id="message" name="message" rows="5" required maxlength="2000" placeholder="Tell us about your needs..."></textarea>
             </div>
+            <div class="form-honeypot" aria-hidden="true" hidden inert>
+              <label for="website">Website</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
             <button type="submit" class="contact-form__submit btn-primary" id="submit-btn">
               <span id="btn-text">Send Message</span>
               <svg id="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -212,13 +216,6 @@ import ScrollReveal from "../components/ScrollReveal.astro";
 </style>
 
 <script>
-  const form = document.getElementById('contact-form') as HTMLFormElement;
-  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-  const btnText = document.getElementById('btn-text');
-  const btnIcon = document.getElementById('btn-icon');
-  const btnSpinner = document.getElementById('btn-spinner');
-  const formStatus = document.getElementById('form-status');
-
   interface ContactResponse {
     error?: string;
   }
@@ -226,7 +223,17 @@ import ScrollReveal from "../components/ScrollReveal.astro";
   const getErrorMessage = (error: unknown) =>
     error instanceof Error ? error.message : 'An error occurred. Please try again later.';
 
-  if (form && submitBtn) {
+  function initContactForm() {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const btnText = document.getElementById('btn-text');
+    const btnIcon = document.getElementById('btn-icon');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const formStatus = document.getElementById('form-status');
+
+    if (!form || !submitBtn || form.dataset.initialized === 'true') return;
+    form.dataset.initialized = 'true';
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -270,8 +277,7 @@ import ScrollReveal from "../components/ScrollReveal.astro";
             throw new Error(result.error || 'Failed to send message.');
           }
         } else {
-          // Server returned non-JSON (e.g. 500 error page)
-          throw new Error('A server error occurred. Please make sure the API key is set.');
+          throw new Error('The message service is temporarily unavailable. Please try again later.');
         }
       } catch (error: unknown) {
         // Error handling
@@ -289,4 +295,7 @@ import ScrollReveal from "../components/ScrollReveal.astro";
       }
     });
   }
+
+  initContactForm();
+  document.addEventListener('astro:page-load', initContactForm);
 </script>

@@ -5,7 +5,7 @@ import { Resend } from 'resend';
 import { z } from 'zod';
 
 const blockedDomains = ['example.com', 'test.com', 'spam.com', 'fake.com', 'tempmail.com', 'mailinator.com'];
-const contactRecipient = 'yaseenzaman1312@proton.me';
+const defaultContactRecipient = 'contact@canopryx.com';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name is too long"),
@@ -18,6 +18,7 @@ const contactSchema = z.object({
     "Subject contains invalid characters",
   ).optional(),
   message: z.string().trim().min(1, "Message is required").max(2000, "Message is too long"),
+  website: z.string().max(0).optional(),
 });
 
 const jsonResponse = (body: Record<string, unknown>, status: number) =>
@@ -40,6 +41,14 @@ function escapeHtml(value: string) {
 
 export const POST: APIRoute = async ({ request }) => {
   const apiKey = (typeof process !== 'undefined' ? process.env.RESEND_API_KEY : undefined) || import.meta.env.RESEND_API_KEY;
+  const contactRecipient =
+    (typeof process !== 'undefined' ? process.env.CONTACT_TO_EMAIL : undefined) ||
+    import.meta.env.CONTACT_TO_EMAIL ||
+    defaultContactRecipient;
+  const contactSender =
+    (typeof process !== 'undefined' ? process.env.CONTACT_FROM_EMAIL : undefined) ||
+    import.meta.env.CONTACT_FROM_EMAIL ||
+    'Canopryx Contact Form <onboarding@resend.dev>';
 
   if (!apiKey) {
     console.error('Contact email service is not configured.');
@@ -47,7 +56,23 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
+    const contentLength = Number(request.headers.get('content-length') ?? 0);
+    if (contentLength > 12_000) {
+      return jsonResponse({ error: 'Request is too large.' }, 413);
+    }
+
     const rawData: unknown = await request.json();
+
+    if (
+      typeof rawData === 'object' &&
+      rawData !== null &&
+      'website' in rawData &&
+      typeof rawData.website === 'string' &&
+      rawData.website.length > 0
+    ) {
+      return jsonResponse({ success: true }, 200);
+    }
+
     const parsed = contactSchema.safeParse(rawData);
 
     if (!parsed.success) {
@@ -64,7 +89,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const resend = new Resend(apiKey);
     const { data: resendData, error } = await resend.emails.send({
-      from: 'Canopryx Contact Form <onboarding@resend.dev>',
+      from: contactSender,
       to: [contactRecipient],
       replyTo: email,
       subject: `New Contact Request: ${subject || 'No Subject'}`,

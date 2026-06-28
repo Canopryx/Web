@@ -42,6 +42,7 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
   scroll-behavior: smooth;
+  overflow-x: clip;
   background-color: #f7faf5;
 }
 html::-webkit-scrollbar { display: none; }
@@ -422,7 +423,7 @@ ol, ul, menu { list-style: none; }
   padding-top: 13rem;
   padding-bottom: 14rem;
   text-align: center;
-  overflow: visible;
+  overflow: clip;
 }
 
 @keyframes heroFadeInUp {

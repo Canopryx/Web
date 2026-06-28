@@ -1,0 +1,13 @@
+---
+import ErrorPage from "../components/ErrorPage.astro";
+---
+
+<ErrorPage
+  code="505"
+  eyebrow="Protocol mismatch"
+  title="This connection needs an upgrade"
+  description="The request used an HTTP version this service cannot support. Update your browser or client, then establish a fresh connection."
+  status="Modern HTTPS required"
+  secondaryHref="/contact"
+  secondaryLabel="Report a problem"
+/>

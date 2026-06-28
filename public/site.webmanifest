@@ -1,0 +1,17 @@
+{
+  "name": "Canopryx",
+  "short_name": "Canopryx",
+  "description": "On-premises security infrastructure for high-trust environments.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7faf5",
+  "theme_color": "#1d7c49",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
