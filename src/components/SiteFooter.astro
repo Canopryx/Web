@@ -50,9 +50,10 @@ const { noMargin = false } = Astro.props;
 
       </div>
     </div>
-
     <div class="footer__wordmark-wrap" aria-hidden="true">
-      <p class="footer__wordmark">Canopryx</p>
+      <p class="footer__wordmark" data-footer-wordmark>
+        <span class="footer__wordmark-text" data-footer-wordmark-text>Canopryx</span>
+      </p>
     </div>
 
     <div class="footer__bottom">
@@ -64,3 +65,43 @@ const { noMargin = false } = Astro.props;
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  function fitFooterWordmark() {
+    const wordmark = document.querySelector('[data-footer-wordmark]');
+    const text = document.querySelector('[data-footer-wordmark-text]');
+
+    if (!(wordmark instanceof HTMLElement) || !(text instanceof HTMLElement)) {
+      return;
+    }
+
+    wordmark.style.setProperty('--footer-wordmark-scale', '1');
+
+    const styles = window.getComputedStyle(wordmark);
+    const horizontalGutter = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+    const verticalGutter = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
+    const availableWidth = wordmark.clientWidth - horizontalGutter;
+    const naturalWidth = text.offsetWidth;
+    const naturalHeight = text.offsetHeight;
+
+    if (!availableWidth || !naturalWidth || !naturalHeight) {
+      return;
+    }
+
+    const scale = availableWidth / naturalWidth;
+    wordmark.style.setProperty('--footer-wordmark-scale', String(scale));
+    wordmark.style.height = `${Math.ceil((naturalHeight * scale) + verticalGutter)}px`;
+  }
+
+  fitFooterWordmark();
+  document.fonts?.ready.then(fitFooterWordmark);
+
+  const wordmark = document.querySelector('[data-footer-wordmark]');
+  if (wordmark instanceof HTMLElement && 'ResizeObserver' in window) {
+    new ResizeObserver(fitFooterWordmark).observe(wordmark);
+  }
+
+  window.addEventListener('resize', fitFooterWordmark, { passive: true });
+  document.addEventListener('astro:page-load', fitFooterWordmark);
+  document.addEventListener('astro:after-swap', fitFooterWordmark);
+</script>
