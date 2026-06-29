@@ -174,7 +174,7 @@ ol, ul, menu { list-style: none; }
   z-index: 0;
   height: clamp(3.25rem, 5vw, 5rem);
   margin: clamp(-2.4rem, -3vw, -1.75rem) calc(-1 * var(--frame-gutter)) 0;
-  background: var(--frame-shell);
+  background: var(--frame-footer);
   border-radius: clamp(1.5rem, 2.5vw, 2.75rem) clamp(1.5rem, 2.5vw, 2.75rem) 0 0;
 }
 
@@ -271,21 +271,29 @@ ol, ul, menu { list-style: none; }
 .site-nav-shell__corner {
   position: absolute;
   top: var(--frame-gutter);
-  width: calc((100% - var(--notch-width)) / 2 - var(--frame-gutter));
-  height: calc(4.65rem - var(--frame-gutter));
+  width: 1.65rem;
+  height: 1.65rem;
   pointer-events: none;
-  background: var(--frame-shell);
-  border-bottom: 1px solid rgba(191, 196, 204, 0.16);
+  background: transparent;
+  z-index: 2;
 }
 
 .site-nav-shell__corner--left {
-  left: var(--frame-gutter);
-  border-radius: clamp(1.55rem, 2.4vw, 2.25rem) 0 1.5rem 0;
+  right: calc(50% + var(--notch-width) / 2 - 1px);
+  left: auto;
+  border-top-right-radius: 1.65rem;
+  border-top: 1px solid rgba(191, 196, 204, 0.16);
+  border-right: 1px solid rgba(191, 196, 204, 0.16);
+  box-shadow: 0.5rem -0.5rem 0 0.5rem var(--frame-shell);
 }
 
 .site-nav-shell__corner--right {
-  right: var(--frame-gutter);
-  border-radius: 0 clamp(1.55rem, 2.4vw, 2.25rem) 0 1.5rem;
+  left: calc(50% + var(--notch-width) / 2 - 1px);
+  right: auto;
+  border-top-left-radius: 1.65rem;
+  border-top: 1px solid rgba(191, 196, 204, 0.16);
+  border-left: 1px solid rgba(191, 196, 204, 0.16);
+  box-shadow: -0.5rem -0.5rem 0 0.5rem var(--frame-shell);
 }
 
 .navbar {
@@ -879,23 +887,13 @@ ol, ul, menu { list-style: none; }
 .site-footer {
   margin-top: 6rem;
   position: relative;
-  background: var(--frame-shell);
+  background: var(--frame-footer);
   color: rgba(255,255,255,0.7);
   overflow: hidden;
 }
 
 .site-footer::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 56px 56px;
-  opacity: 0.4;
-  mask-image: linear-gradient(180deg, rgba(0,0,0,0.55), transparent 82%);
-  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.55), transparent 82%);
-  pointer-events: none;
+  display: none;
 }
 
 .site-footer--no-margin {
