@@ -60,7 +60,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body.nav-open {
@@ -825,29 +825,7 @@ ol, ul, menu { list-style: none; }
   position: relative;
 }
 
-.footer__brand-mark {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.footer__logo {
-  width: 4.5rem;
-  height: auto;
-  flex-shrink: 0;
-  filter: drop-shadow(0 18px 30px rgba(107,198,142,0.14));
-}
-
-.footer__brand-kicker {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-}
-
 .footer__brand-text {
-  margin-top: 0.45rem;
   max-width: 18rem;
   font-size: 1.05rem;
   font-weight: 600;
@@ -1119,14 +1097,6 @@ ol, ul, menu { list-style: none; }
 
   .footer__links-area {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .footer__brand-mark {
-    align-items: flex-start;
-  }
-
-  .footer__logo {
-    width: 3.8rem;
   }
 
   .site-backdrop__grid {

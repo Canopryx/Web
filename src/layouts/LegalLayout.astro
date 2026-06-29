@@ -280,8 +280,12 @@ const updatedIso = new Date(updated).toISOString().slice(0, 10);
   @media (min-width: 861px) {
     .legal-nav {
       position: sticky;
-      top: min(7rem, calc(100vh - var(--legal-nav-height, 0px) - 2rem));
+      top: 7rem;
       align-self: start;
+      max-height: calc(100vh - 9rem);
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
     }
   }
 
@@ -304,14 +308,6 @@ const updatedIso = new Date(updated).toISOString().slice(0, 10);
 
     const legalNav = document.querySelector<HTMLElement>('.legal-nav');
     if (!legalNav) return;
-
-    const syncHeight = () => {
-      legalNav.style.setProperty('--legal-nav-height', `${legalNav.offsetHeight}px`);
-    };
-
-    const resizeObserver = new ResizeObserver(syncHeight);
-    resizeObserver.observe(legalNav);
-    syncHeight();
 
     const links = [...legalNav.querySelectorAll<HTMLAnchorElement>('[data-section-link]')];
     const sections = links
@@ -341,7 +337,6 @@ const updatedIso = new Date(updated).toISOString().slice(0, 10);
     sections.forEach((section) => sectionObserver.observe(section));
 
     cleanupLegalPage = () => {
-      resizeObserver.disconnect();
       sectionObserver.disconnect();
     };
   }
