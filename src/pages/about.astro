@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SiteHeader from "../components/SiteHeader.astro";
+import SiteFrame from "../components/SiteFrame.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import ValueCard from "../components/ValueCard.astro";
 import ScrollReveal from "../components/ScrollReveal.astro";
@@ -26,31 +26,31 @@ const values = [
   title="About - Canopryx"
   description="Learn about Canopryx — building modern cybersecurity tools with a cleaner and more deliberate public presence."
 >
-  <SiteHeader />
+  <SiteFrame>
+    <main>
+      <section class="about page-shell">
+        <div class="about__header">
 
-  <main>
-    <section class="about page-shell">
-      <div class="about__header">
+          <h1 class="about__title enter-after-nav" style="--enter-delay: 0.5s;">About Canopryx</h1>
+          <p class="about__subtitle enter-after-nav" style="--enter-delay: 0.58s;">
+            Building modern cybersecurity tools with a cleaner and more deliberate public&nbsp;presence.
+          </p>
+        </div>
 
-        <h1 class="about__title enter-after-nav" style="--enter-delay: 0.5s;">About Canopryx</h1>
-        <p class="about__subtitle enter-after-nav" style="--enter-delay: 0.58s;">
-          Building modern cybersecurity tools with a cleaner and more deliberate public&nbsp;presence.
-        </p>
-      </div>
+        <div class="about__grid" id="principles">
+          {values.map((value, i) => (
+            <ValueCard
+              title={value.title}
+              description={value.description}
+              index={i}
+            />
+          ))}
+        </div>
 
-      <div class="about__grid" id="principles">
-        {values.map((value, i) => (
-          <ValueCard
-            title={value.title}
-            description={value.description}
-            index={i}
-          />
-        ))}
-      </div>
-      
-      <RadarEffect />
-    </section>
-  </main>
+        <RadarEffect />
+      </section>
+    </main>
+  </SiteFrame>
 
   <SiteFooter noMargin={true} />
   <ScrollReveal />

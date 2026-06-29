@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SiteHeader from "../components/SiteHeader.astro";
+import SiteFrame from "../components/SiteFrame.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Hero from "../components/Hero.astro";
 ---
@@ -9,11 +9,11 @@ import Hero from "../components/Hero.astro";
   title="Canopryx | On-Premises Security Infrastructure"
   description="Canopryx builds air-gap capable, zero-knowledge security infrastructure for organizations that require full control over credentials, secrets, and sensitive data."
 >
-  <SiteHeader />
-
-  <main>
-    <Hero />
-  </main>
+  <SiteFrame>
+    <main>
+      <Hero />
+    </main>
+  </SiteFrame>
 
   <SiteFooter noMargin={true} />
 </BaseLayout>

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SiteHeader from "./SiteHeader.astro";
+import SiteFrame from "./SiteFrame.astro";
 import SiteFooter from "./SiteFooter.astro";
 
 interface Props {
@@ -25,29 +25,29 @@ const {
 ---
 
 <BaseLayout title={`${code}: ${title} | Canopryx`} description={description} noindex={true}>
-  <SiteHeader />
-
-  <main>
-    <section class="error-page page-shell">
-      <div class="error-page__panel panel enter-after-nav">
-        <div class="error-page__signal" aria-hidden="true">
-          <span></span><span></span><span></span>
+  <SiteFrame>
+    <main>
+      <section class="error-page page-shell">
+        <div class="error-page__panel panel enter-after-nav">
+          <div class="error-page__signal" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <p class="error-page__eyebrow">{eyebrow}</p>
+          <p class="error-page__code" aria-hidden="true">{code}</p>
+          <h1>{title}</h1>
+          <p class="error-page__description">{description}</p>
+          <div class="error-page__actions">
+            <a class="btn-primary" href="/">Return home</a>
+            <a class="btn-secondary" href={secondaryHref}>{secondaryLabel}</a>
+          </div>
+          <p class="error-page__status">
+            <span aria-hidden="true"></span>
+            {status}
+          </p>
         </div>
-        <p class="error-page__eyebrow">{eyebrow}</p>
-        <p class="error-page__code" aria-hidden="true">{code}</p>
-        <h1>{title}</h1>
-        <p class="error-page__description">{description}</p>
-        <div class="error-page__actions">
-          <a class="btn-primary" href="/">Return home</a>
-          <a class="btn-secondary" href={secondaryHref}>{secondaryLabel}</a>
-        </div>
-        <p class="error-page__status">
-          <span aria-hidden="true"></span>
-          {status}
-        </p>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
+  </SiteFrame>
 
   <SiteFooter noMargin={true} />
 </BaseLayout>
@@ -76,7 +76,7 @@ const {
     z-index: -1;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(107, 198, 142, 0.2), transparent 68%);
+    background: radial-gradient(circle, rgba(42, 111, 126, 0.18), transparent 68%);
   }
 
   .error-page__signal {
@@ -114,8 +114,8 @@ const {
     line-height: 0.95;
     letter-spacing: -0.08em;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(29, 124, 73, 0.22);
-    background: linear-gradient(180deg, rgba(29, 124, 73, 0.14), transparent 82%);
+    -webkit-text-stroke: 1px rgba(42, 111, 126, 0.24);
+    background: linear-gradient(180deg, rgba(36, 77, 153, 0.12), transparent 82%);
     background-clip: text;
   }
 
@@ -163,7 +163,7 @@ const {
     height: 0.5rem;
     border-radius: 50%;
     background: var(--color-primary-light);
-    box-shadow: 0 0 0 0.3rem rgba(107, 198, 142, 0.14);
+    box-shadow: 0 0 0 0.3rem rgba(56, 161, 105, 0.14);
   }
 
   @media (max-width: 480px) {

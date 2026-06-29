@@ -1,0 +1,19 @@
+---
+import SiteHeader from "./SiteHeader.astro";
+---
+
+<div class="site-frame">
+  <SiteHeader />
+
+  <div class="site-frame__surface">
+    <div class="site-backdrop" aria-hidden="true" transition:persist>
+      <div class="site-backdrop__grid"></div>
+      <div class="site-backdrop__glow site-backdrop__glow--one"></div>
+      <div class="site-backdrop__glow site-backdrop__glow--two"></div>
+    </div>
+
+    <slot />
+  </div>
+
+  <div class="site-frame__footer-bridge" aria-hidden="true"></div>
+</div>

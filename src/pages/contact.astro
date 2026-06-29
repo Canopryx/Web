@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SiteHeader from "../components/SiteHeader.astro";
+import SiteFrame from "../components/SiteFrame.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import ScrollReveal from "../components/ScrollReveal.astro";
 ---
@@ -9,9 +9,8 @@ import ScrollReveal from "../components/ScrollReveal.astro";
   title="Contact - Canopryx"
   description="Get in touch with Canopryx to discuss securing your operations."
 >
-  <SiteHeader />
-
-  <main>
+  <SiteFrame>
+    <main>
     <section class="contact page-shell">
       <div class="contact__grid">
         <div class="contact__header enter-after-nav" style="--enter-delay: 0.5s;">
@@ -57,7 +56,8 @@ import ScrollReveal from "../components/ScrollReveal.astro";
       </div>
       </div>
     </section>
-  </main>
+    </main>
+  </SiteFrame>
 
   <SiteFooter />
   <ScrollReveal />
@@ -138,8 +138,8 @@ import ScrollReveal from "../components/ScrollReveal.astro";
   .form-group input,
   .form-group textarea {
     padding: 0.85rem 1rem;
-    border-radius: 12px;
-    border: 1px solid rgba(16, 36, 24, 0.15);
+    border-radius: 9px;
+    border: 1px solid rgba(39, 49, 58, 0.16);
     background: rgba(255, 255, 255, 0.6);
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -152,12 +152,12 @@ import ScrollReveal from "../components/ScrollReveal.astro";
     outline: none;
     border-color: var(--color-primary);
     background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 0 3px rgba(29, 124, 73, 0.1);
+    box-shadow: 0 0 0 3px rgba(42, 111, 126, 0.11);
   }
 
   .form-group input::placeholder,
   .form-group textarea::placeholder {
-    color: rgba(16, 36, 24, 0.4);
+    color: rgba(39, 49, 58, 0.45);
   }
 
   .spinner {
@@ -180,16 +180,16 @@ import ScrollReveal from "../components/ScrollReveal.astro";
 
   .form-status {
     padding: 1rem;
-    border-radius: 12px;
+    border-radius: 9px;
     font-size: 0.9rem;
     font-weight: 500;
     text-align: center;
   }
 
   .form-status.success {
-    background: rgba(107, 198, 142, 0.15);
-    color: var(--color-primary-dark);
-    border: 1px solid rgba(107, 198, 142, 0.3);
+    background: rgba(56, 161, 105, 0.14);
+    color: #26734a;
+    border: 1px solid rgba(56, 161, 105, 0.28);
   }
 
   .form-status.error {

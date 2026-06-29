@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SiteHeader from "../components/SiteHeader.astro";
+import SiteFrame from "../components/SiteFrame.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import ProductCard from "../components/ProductCard.astro";
 import ScrollReveal from "../components/ScrollReveal.astro";
@@ -19,9 +19,8 @@ const products = [
   title="Products - Canopryx"
   description="Explore Canopryx's focused set of cybersecurity tools, from secure vault management to future confidential programs."
 >
-  <SiteHeader />
-
-  <main>
+  <SiteFrame>
+    <main>
     <section class="products page-shell">
       <div class="products__header">
 
@@ -51,7 +50,8 @@ const products = [
         ))}
       </div>
     </section>
-  </main>
+    </main>
+  </SiteFrame>
 
   <SiteFooter />
   <ScrollReveal />

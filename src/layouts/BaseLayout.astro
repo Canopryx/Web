@@ -25,7 +25,7 @@ const organizationSchema = {
   "@type": "Organization",
   name: "Canopryx",
   url: Astro.site,
-  logo: new URL("/logo.webp", Astro.site),
+  logo: new URL("/favicon.png", Astro.site),
   description:
     "Canopryx builds on-premises security infrastructure for regulated and high-trust environments.",
   email: "contact@canopryx.com",
@@ -42,9 +42,9 @@ const organizationSchema = {
       name="robots"
       content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"}
     />
-    <meta name="theme-color" content="#f7faf5" />
+    <meta name="theme-color" content="#0f161a" />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content="website" />
@@ -89,13 +89,6 @@ const organizationSchema = {
     </script>
   </head>
   <body>
-    <!-- Background decoration -->
-    <div class="site-backdrop" aria-hidden="true" transition:persist>
-      <div class="site-backdrop__grid"></div>
-      <div class="site-backdrop__glow site-backdrop__glow--one"></div>
-      <div class="site-backdrop__glow site-backdrop__glow--two"></div>
-    </div>
-
     <slot />
   </body>
 </html>

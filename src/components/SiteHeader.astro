@@ -2,61 +2,65 @@
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="navbar" id="main-nav" aria-label="Primary">
-  <a class="navbar__brand" href="/">
-    <img src="/logo.webp" alt="" class="navbar__logo" width="32" height="32" />
-    <div class="navbar__brand-text">
-      <span class="navbar__wordmark">Canopryx</span>
+<header class="site-nav-shell">
+  <span class="site-nav-shell__corner site-nav-shell__corner--left" aria-hidden="true"></span>
+  <span class="site-nav-shell__corner site-nav-shell__corner--right" aria-hidden="true"></span>
+
+  <nav class="navbar" id="main-nav" aria-label="Primary">
+    <a class="navbar__brand" href="/">
+      <img src="/favicon.png" alt="" class="navbar__logo" width="36" height="36" />
+      <div class="navbar__brand-text">
+        <span class="navbar__wordmark">Canopryx</span>
+      </div>
+    </a>
+
+    <div class="navbar__links">
+      <a
+        class={`navbar__link ${currentPath === '/' ? 'navbar__link--active' : ''}`}
+        href="/"
+      >
+        Home
+      </a>
+      <a
+        class={`navbar__link ${currentPath === '/products' || currentPath === '/products/' ? 'navbar__link--active' : ''}`}
+        href="/products"
+      >
+        Products
+      </a>
+      <a
+        class={`navbar__link ${currentPath === '/about' || currentPath === '/about/' ? 'navbar__link--active' : ''}`}
+        href="/about"
+      >
+        About
+      </a>
     </div>
-  </a>
 
-  <div class="navbar__links">
-    <a
-      class={`navbar__link ${currentPath === '/' ? 'navbar__link--active' : ''}`}
-      href="/"
-    >
-      Home
+    <a class="navbar__cta" href="/contact" id="nav-contact-btn">
+      Contact
     </a>
-    <a
-      class={`navbar__link ${currentPath === '/products' || currentPath === '/products/' ? 'navbar__link--active' : ''}`}
-      href="/products"
+
+    <button
+      class="navbar__toggle"
+      id="nav-toggle"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
     >
-      Products
-    </a>
-    <a
-      class={`navbar__link ${currentPath === '/about' || currentPath === '/about/' ? 'navbar__link--active' : ''}`}
-      href="/about"
-    >
-      About
-    </a>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </nav>
+
+  <div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+    <a class="mobile-nav__link" href="/" id="mobile-home-link">Home</a>
+    <a class="mobile-nav__link" href="/products" id="mobile-products-link">Products</a>
+    <a class="mobile-nav__link" href="/about" id="mobile-about-link">About</a>
+    <a class="mobile-nav__cta" href="/contact" id="mobile-contact-btn">Contact</a>
   </div>
-
-  <a class="navbar__cta" href="/contact" id="nav-contact-btn">
-    Contact
-  </a>
-
-  <button
-    class="navbar__toggle"
-    id="nav-toggle"
-    aria-label="Toggle navigation menu"
-    aria-expanded="false"
-    aria-controls="mobile-nav"
-  >
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  </button>
-</nav>
-
-<!-- Mobile nav overlay -->
-<div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
-  <a class="mobile-nav__link" href="/" id="mobile-home-link">Home</a>
-  <a class="mobile-nav__link" href="/products" id="mobile-products-link">Products</a>
-  <a class="mobile-nav__link" href="/about" id="mobile-about-link">About</a>
-  <a class="mobile-nav__cta" href="/contact" id="mobile-contact-btn">Contact</a>
-</div>
+</header>
 
 <script>
   function initNav() {
