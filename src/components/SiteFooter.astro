@@ -26,16 +26,6 @@ const { noMargin = false } = Astro.props;
         </div>
       </div>
 
-      <div class="footer__cta-area">
-        <p class="footer__cta-label">Ready to secure<br>your&nbsp;operations?</p>
-        <a class="footer__cta-btn" href="/contact" id="footer-contact-btn">
-          Get in Touch
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-          </svg>
-        </a>
-
-      </div>
     </div>
     <div class="footer__wordmark-wrap" aria-hidden="true">
       <p class="footer__wordmark" data-footer-wordmark>
@@ -80,15 +70,47 @@ const { noMargin = false } = Astro.props;
     wordmark.style.height = `${Math.ceil((naturalHeight * scale) + verticalGutter)}px`;
   }
 
-  fitFooterWordmark();
+  function initFooterAnimation() {
+    const textEl = document.querySelector('[data-footer-wordmark-text]');
+    if (!textEl || textEl.dataset.animInitialized === 'true') return;
+    textEl.dataset.animInitialized = 'true';
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      textEl.classList.add('footer__wordmark-text--hidden');
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              textEl.classList.remove('footer__wordmark-text--hidden');
+              textEl.classList.add('footer__wordmark-text--visible');
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        const wrapEl = document.querySelector('.footer__wordmark-wrap');
+        if (wrapEl) observer.observe(wrapEl);
+      }
+    }
+  }
+
+  function initFooter() {
+    fitFooterWordmark();
+    initFooterAnimation();
+  }
+
+  initFooter();
   document.fonts?.ready.then(fitFooterWordmark);
 
   const wordmark = document.querySelector('[data-footer-wordmark]');
-  if (wordmark instanceof HTMLElement && 'ResizeObserver' in window) {
-    new ResizeObserver(fitFooterWordmark).observe(wordmark);
+  if (wordmark instanceof HTMLElement && !window._canopryxFooterInit) {
+    window._canopryxFooterInit = true;
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(fitFooterWordmark).observe(wordmark);
+    }
+    window.addEventListener('resize', fitFooterWordmark, { passive: true });
+    document.addEventListener('astro:page-load', initFooter);
+    document.addEventListener('astro:after-swap', fitFooterWordmark);
   }
-
-  window.addEventListener('resize', fitFooterWordmark, { passive: true });
-  document.addEventListener('astro:page-load', fitFooterWordmark);
-  document.addEventListener('astro:after-swap', fitFooterWordmark);
 </script>

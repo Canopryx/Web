@@ -1,66 +1,135 @@
 ---
 const circles = new Array(8).fill(1);
+
+const nodes = [
+  {
+    id: "zero-trust",
+    title: "Zero Trust",
+    icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
+    delay: "0.2s",
+    desc: "Verify explicitly. Least privileged access by default across the entire network boundary.",
+    angle: 20
+  },
+  {
+    id: "air-gapped",
+    title: "Air-Gapped",
+    icon: `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>`,
+    delay: "0.4s",
+    desc: "Deploy completely disconnected from the public internet for maximum security.",
+    angle: 60
+  },
+  {
+    id: "post-quantum",
+    title: "Post-Quantum",
+    icon: `<path d="M2 12h4l2-9 5 18 2-9h5"/>`,
+    delay: "0.3s",
+    desc: "Cryptography designed to remain secure against future quantum computing attacks.",
+    angle: 120
+  },
+  {
+    id: "key-rotation",
+    title: "Key Rotation",
+    icon: `<path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>`,
+    delay: "0.5s",
+    desc: "Automated lifecycle management and rotation of cryptographic material.",
+    angle: 180
+  },
+  {
+    id: "on-premises",
+    title: "On-Premises",
+    icon: `<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>`,
+    delay: "0.8s",
+    desc: "Run the entire stack within your physical data centers or private cloud.",
+    angle: 240
+  },
+  {
+    id: "secure-enclave",
+    title: "Secure Enclave",
+    icon: `<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>`,
+    delay: "0.6s",
+    desc: "Hardware-based memory encryption for processing sensitive data securely.",
+    angle: 300
+  },
+  {
+    id: "no-cloud-db",
+    title: "No Cloud DB",
+    icon: `<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>`,
+    delay: "0.7s",
+    desc: "Your data is stored locally. We never host your sensitive credentials.",
+    angle: 340
+  }
+];
 ---
 
-<div class="radar-feature">
+<div class="radar-feature" id="radar-container">
   <div class="radar-feature__nodes">
+    
     <!-- Row 1 -->
     <div class="radar-feature__row">
-      <div class="radar-node" style="--delay: 0.2s">
-        <div class="radar-node__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <span class="radar-node__text">Zero Trust</span>
-      </div>
-      <div class="radar-node" style="--delay: 0.4s">
-        <div class="radar-node__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        </div>
-        <span class="radar-node__text">Air-Gapped</span>
-      </div>
-      <div class="radar-node" style="--delay: 0.3s">
-        <div class="radar-node__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-9 5 18 2-9h5"/></svg>
-        </div>
-        <span class="radar-node__text">Post-Quantum</span>
-      </div>
+      {nodes.slice(0, 3).map((node) => (
+        <button 
+          class="radar-node" 
+          style={`--delay: ${node.delay}; --angle: ${node.angle}deg;`}
+          data-node-id={node.id}
+          data-desc={node.desc}
+          aria-pressed="false"
+        >
+          <div class="radar-node__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={node.icon} />
+          </div>
+          <span class="radar-node__text">{node.title}</span>
+          <span class="radar-node__connector" aria-hidden="true"></span>
+        </button>
+      ))}
     </div>
 
     <!-- Row 2 -->
     <div class="radar-feature__row radar-feature__row--tight">
-      <div class="radar-node" style="--delay: 0.5s">
-        <div class="radar-node__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-        </div>
-        <span class="radar-node__text">Key Rotation</span>
-      </div>
-      <div class="radar-node" style="--delay: 0.8s">
-        <div class="radar-node__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-        </div>
-        <span class="radar-node__text">On-Premises</span>
-      </div>
+      {nodes.slice(3, 5).map((node) => (
+        <button 
+          class="radar-node" 
+          style={`--delay: ${node.delay}; --angle: ${node.angle}deg;`}
+          data-node-id={node.id}
+          data-desc={node.desc}
+          aria-pressed="false"
+        >
+          <div class="radar-node__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={node.icon} />
+          </div>
+          <span class="radar-node__text">{node.title}</span>
+          <span class="radar-node__connector" aria-hidden="true"></span>
+        </button>
+      ))}
     </div>
 
     <!-- Row 3 -->
     <div class="radar-feature__row">
-      <div class="radar-node" style="--delay: 0.6s">
-        <div class="radar-node__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-        </div>
-        <span class="radar-node__text">Secure Enclave</span>
-      </div>
-      <div class="radar-node" style="--delay: 0.7s">
-        <div class="radar-node__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-        </div>
-        <span class="radar-node__text">No Cloud DB</span>
-      </div>
+      {nodes.slice(5, 7).map((node) => (
+        <button 
+          class="radar-node" 
+          style={`--delay: ${node.delay}; --angle: ${node.angle}deg;`}
+          data-node-id={node.id}
+          data-desc={node.desc}
+          aria-pressed="false"
+        >
+          <div class="radar-node__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={node.icon} />
+          </div>
+          <span class="radar-node__text">{node.title}</span>
+          <span class="radar-node__connector" aria-hidden="true"></span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Detail Panel -->
+    <div class="radar-detail-panel" aria-live="polite">
+      <h3 class="radar-detail-title" id="radar-detail-title">Platform Capabilities</h3>
+      <p class="radar-detail-desc" id="radar-detail-desc">Select a node to learn more.</p>
     </div>
 
     <!-- Radar Background -->
     <div class="radar-background">
-      <div class="radar-spin">
+      <div class="radar-spin" id="radar-spin">
         <div class="radar-sweep"></div>
       </div>
       {circles.map((_, idx) => (
@@ -82,7 +151,7 @@ const circles = new Array(8).fill(1);
     align-items: center;
     width: 100%;
     margin-top: 5rem;
-    padding: 2rem 1rem 0; /* Remove bottom padding to sit on footer */
+    padding: 2rem 1rem 0;
     overflow: hidden;
   }
 
@@ -94,9 +163,9 @@ const circles = new Array(8).fill(1);
     justify-content: center;
     gap: 3rem;
     width: 100%;
-    max-width: 48rem;
-    min-height: 26rem; /* Make sure there is enough height for the top half of circles */
-    padding-bottom: 2rem; /* Keep nodes slightly above floor */
+    max-width: 54rem;
+    min-height: 32rem; /* Adjusted for panel */
+    padding-bottom: 2rem;
     z-index: 2;
   }
 
@@ -109,16 +178,28 @@ const circles = new Array(8).fill(1);
   }
   
   .radar-feature__row--tight {
-    max-width: 32rem;
+    max-width: 44rem; /* Wider to accommodate central panel */
   }
 
   .radar-node {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
     opacity: 0;
     animation: popIn 0.5s var(--ease-out) var(--delay) forwards;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+    outline: none; /* Handled by focus-visible */
+  }
+
+  .radar-node:focus-visible .radar-node__icon {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
   }
 
   .radar-node__icon {
@@ -132,6 +213,8 @@ const circles = new Array(8).fill(1);
     border: 1px solid rgba(42, 111, 126, 0.2);
     box-shadow: 0 4px 12px rgba(39, 49, 58, 0.08), inset 0 2px 4px rgba(255,255,255,0.6);
     color: var(--color-primary);
+    transition: transform 0.2s, background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+    z-index: 2;
   }
 
   .radar-node__icon svg {
@@ -149,13 +232,62 @@ const circles = new Array(8).fill(1);
     backdrop-filter: blur(4px);
     border: 1px solid rgba(0,0,0,0.06);
     box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    transition: color 0.2s, background 0.2s;
+    z-index: 2;
+  }
+
+  /* Connection line */
+  .radar-node__connector {
+    position: absolute;
+    top: 1.75rem; /* center of icon */
+    left: 50%;
+    width: 1px;
+    height: 0;
+    background: linear-gradient(to bottom, var(--color-primary), transparent);
+    transform-origin: top center;
+    z-index: 1;
+    opacity: 0;
+    transition: height 0.4s ease-out, opacity 0.4s;
+    pointer-events: none;
+  }
+
+  /* Selected / Hover / Focus states */
+  .radar-node:hover .radar-node__icon,
+  .radar-node[aria-pressed="true"] .radar-node__icon {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    transform: scale(1.1);
+    box-shadow: 0 8px 24px rgba(42, 111, 126, 0.3);
+  }
+
+  .radar-node:hover .radar-node__text,
+  .radar-node[aria-pressed="true"] .radar-node__text {
+    color: var(--color-text);
+    background: white;
+  }
+
+  .radar-node[aria-pressed="true"] .radar-node__connector {
+    height: 200px; /* Extends towards center */
+    opacity: 0.5;
+  }
+
+  /* Sweep detection pulse */
+  .radar-node.is-pulsing .radar-node__icon {
+    animation: nodePulse 0.4s ease-out;
+  }
+
+  @keyframes nodePulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(42, 111, 126, 0.5); }
+    50% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(42, 111, 126, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(42, 111, 126, 0); }
   }
 
   .radar-background {
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translate(-50%, 50%); /* Moves the center of the radar exactly to the bottom line */
+    transform: translate(-50%, 50%);
     width: 20rem;
     height: 20rem;
     display: flex;
@@ -169,7 +301,7 @@ const circles = new Array(8).fill(1);
     position: absolute;
     top: 50%;
     right: 50%;
-    width: 400px;
+    width: 500px; /* widened sweep */
     height: 5px;
     display: flex;
     align-items: flex-end;
@@ -177,6 +309,12 @@ const circles = new Array(8).fill(1);
     transform-origin: right center;
     animation: radarSpin 8s linear infinite;
     z-index: 5;
+    will-change: transform;
+  }
+
+  /* Paused animation state */
+  .radar-container--paused .radar-spin {
+    animation-play-state: paused;
   }
 
   .radar-sweep {
@@ -207,9 +345,43 @@ const circles = new Array(8).fill(1);
     z-index: 10;
   }
 
+  /* Detail Panel */
+  .radar-detail-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%); /* Shifted up slightly */
+    width: 18rem;
+    text-align: center;
+    z-index: 20;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 1.25rem;
+    box-shadow: 0 12px 32px rgba(42, 111, 126, 0.08);
+    opacity: 0;
+    animation: circleFadeIn 0.8s ease-out 0.6s forwards;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .radar-detail-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .radar-detail-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
   @keyframes radarSpin {
-    from { transform: rotate(20deg); }
-    to { transform: rotate(380deg); }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
   @keyframes popIn {
@@ -222,6 +394,29 @@ const circles = new Array(8).fill(1);
     100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
   }
   
+  @media (prefers-reduced-motion: reduce) {
+    .radar-spin {
+      display: none;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .radar-feature__row--tight {
+      max-width: 100%;
+    }
+    
+    .radar-detail-panel {
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: none !important;
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 24rem;
+      background: rgba(255, 255, 255, 0.85);
+    }
+  }
+
   @media (max-width: 640px) {
     .radar-feature__row {
       flex-wrap: wrap;
@@ -229,7 +424,115 @@ const circles = new Array(8).fill(1);
       gap: 2rem;
     }
     .radar-node__text {
-      display: none;
+      display: block; /* Keep labels visible on mobile per instructions */
+    }
+    .radar-node__connector {
+      display: none; /* Hide connector lines on mobile */
     }
   }
 </style>
+
+<script>
+  function initRadar() {
+    const container = document.getElementById('radar-container');
+    if (!container || container.dataset.initialized === 'true') return;
+    container.dataset.initialized = 'true';
+
+    const nodes = container.querySelectorAll('.radar-node');
+    const titleEl = document.getElementById('radar-detail-title');
+    const descEl = document.getElementById('radar-detail-desc');
+
+    const defaultTitle = "Platform Capabilities";
+    const defaultDesc = "Select a node to learn more.";
+
+    function resetNodes() {
+      nodes.forEach(node => {
+        node.setAttribute('aria-pressed', 'false');
+      });
+    }
+
+    function setActiveNode(node: HTMLElement) {
+      resetNodes();
+      node.setAttribute('aria-pressed', 'true');
+      
+      const title = node.querySelector('.radar-node__text')?.textContent || defaultTitle;
+      const desc = node.getAttribute('data-desc') || defaultDesc;
+
+      if (titleEl) titleEl.textContent = title;
+      if (descEl) descEl.textContent = desc;
+      
+      // Update connector angle
+      const connector = node.querySelector('.radar-node__connector') as HTMLElement;
+      if (connector) {
+         // This is a simple visual trick, ideally we'd calculate exact angles based on DOM rects.
+         // Let's just use CSS.
+      }
+    }
+
+    function clearActiveNode() {
+      resetNodes();
+      if (titleEl) titleEl.textContent = defaultTitle;
+      if (descEl) descEl.textContent = defaultDesc;
+    }
+
+    nodes.forEach(node => {
+      const htmlNode = node as HTMLElement;
+      
+      htmlNode.addEventListener('click', () => {
+        if (htmlNode.getAttribute('aria-pressed') === 'true') {
+          clearActiveNode();
+        } else {
+          setActiveNode(htmlNode);
+        }
+      });
+
+      htmlNode.addEventListener('mouseenter', () => {
+        container.classList.add('radar-container--paused');
+        if (htmlNode.getAttribute('aria-pressed') !== 'true') {
+          // Preview on hover
+          if (titleEl) titleEl.textContent = htmlNode.querySelector('.radar-node__text')?.textContent || defaultTitle;
+          if (descEl) descEl.textContent = htmlNode.getAttribute('data-desc') || defaultDesc;
+        }
+      });
+
+      htmlNode.addEventListener('mouseleave', () => {
+        container.classList.remove('radar-container--paused');
+        // Restore pressed state or default
+        const pressedNode = container.querySelector('.radar-node[aria-pressed="true"]');
+        if (pressedNode) {
+          if (titleEl) titleEl.textContent = pressedNode.querySelector('.radar-node__text')?.textContent || defaultTitle;
+          if (descEl) descEl.textContent = pressedNode.getAttribute('data-desc') || defaultDesc;
+        } else {
+          if (titleEl) titleEl.textContent = defaultTitle;
+          if (descEl) descEl.textContent = defaultDesc;
+        }
+      });
+
+      htmlNode.addEventListener('focus', () => {
+        container.classList.add('radar-container--paused');
+      });
+
+      htmlNode.addEventListener('blur', () => {
+        container.classList.remove('radar-container--paused');
+      });
+    });
+
+    // Sub-pulse synchronization (8s cycle)
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setInterval(() => {
+        // Find current angle of sweep (this is an approximation since we can't easily read animation transform precisely without heavy rAF)
+        // Given 8s linear loop, 360deg = 8000ms.
+        // For visual flair, we'll just periodically pulse nodes in sequence.
+        nodes.forEach((node, idx) => {
+          setTimeout(() => {
+            node.classList.add('is-pulsing');
+            setTimeout(() => node.classList.remove('is-pulsing'), 400);
+          }, idx * 1000);
+        });
+      }, 8000);
+    }
+  }
+
+  initRadar();
+  document.addEventListener('astro:page-load', initRadar);
+</script>
