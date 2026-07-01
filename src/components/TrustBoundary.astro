@@ -1,0 +1,309 @@
+---
+---
+
+<section class="trust-boundary" aria-labelledby="trust-title">
+  <div class="page-shell">
+    <div class="trust-boundary__inner">
+      <div class="trust-boundary__diagram" aria-label="Diagram showing approved operators and workloads accessing a secure boundary, while cloud services are blocked.">
+        
+        <!-- SVG connecting lines and animated packets -->
+        <svg class="trust-boundary__lines" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
+          <!-- Line from Operators to Boundary -->
+          <path id="path-operators" d="M 120 100 L 280 100" class="trust-line trust-line--approved" />
+          <!-- Line from Workloads to Boundary -->
+          <path id="path-workloads" d="M 120 300 L 280 300" class="trust-line trust-line--approved" />
+          <!-- Line from Cloud Service to Boundary -->
+          <path id="path-cloud" d="M 680 200 L 520 200" class="trust-line trust-line--blocked" />
+
+          <!-- Internal Lines -->
+          <path d="M 360 100 L 400 100 L 400 150" class="trust-line trust-line--internal" />
+          <path d="M 360 300 L 400 300 L 400 250" class="trust-line trust-line--internal" />
+          <path d="M 400 200 L 440 200" class="trust-line trust-line--internal" />
+
+          <!-- Packets -->
+          <circle r="4" class="trust-packet trust-packet--approved">
+            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 120 100 L 280 100" />
+          </circle>
+          <circle r="4" class="trust-packet trust-packet--approved" style="animation-delay: 1.2s">
+            <animateMotion dur="2.5s" repeatCount="indefinite" begin="1.2s" path="M 120 300 L 280 300" />
+          </circle>
+          <!-- Blocked packet -->
+          <g class="trust-packet-group">
+            <circle r="4" class="trust-packet trust-packet--blocked">
+              <animateMotion dur="2.5s" repeatCount="indefinite" path="M 680 200 L 520 200" />
+            </circle>
+            <circle cx="520" cy="200" r="10" class="trust-packet-burst" />
+          </g>
+        </svg>
+
+        <!-- HTML Nodes -->
+        <div class="trust-nodes">
+          <!-- External Sources -->
+          <div class="trust-node trust-node--external trust-node--operator">
+            <div class="trust-node__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <span>Operators</span>
+          </div>
+
+          <div class="trust-node trust-node--external trust-node--workload">
+            <div class="trust-node__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <span>Workloads</span>
+          </div>
+
+          <div class="trust-node trust-node--external trust-node--cloud">
+            <div class="trust-node__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            </div>
+            <span>Cloud Service</span>
+          </div>
+
+          <!-- Canopryx Boundary -->
+          <div class="trust-box">
+            <div class="trust-box__label">SVM Architecture (Customer Controlled)</div>
+            
+            <div class="trust-node trust-node--internal trust-node--secrets">
+              <div class="trust-node__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+              </div>
+              <span>Secrets</span>
+            </div>
+
+            <div class="trust-node trust-node--internal trust-node--audit">
+              <div class="trust-node__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <span>Audit Trail</span>
+            </div>
+
+            <div class="trust-node trust-node--internal trust-node--store">
+              <div class="trust-node__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              </div>
+              <span>Encrypted Store</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="trust-boundary__content">
+        <h2 id="trust-title">Zero-knowledge architecture.</h2>
+        <p>Keep credentials inside infrastructure you control. Canopryx provides an air-gap capable boundary where sensitive data never touches external cloud services.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust-boundary {
+    padding: 6rem 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .trust-boundary__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .trust-boundary__content {
+    text-align: center;
+    max-width: 42rem;
+    margin-top: -2rem; /* Pull up closer to diagram */
+  }
+
+  .trust-boundary__content h2 {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    color: var(--color-text);
+  }
+
+  .trust-boundary__content p {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+  }
+
+  .trust-boundary__diagram {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 400px;
+  }
+
+  .trust-boundary__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .trust-line {
+    fill: none;
+    stroke-width: 2;
+    stroke-dasharray: 4 4;
+  }
+
+  .trust-line--approved {
+    stroke: rgba(56, 161, 105, 0.4);
+  }
+
+  .trust-line--blocked {
+    stroke: rgba(220, 53, 69, 0.4);
+  }
+
+  .trust-line--internal {
+    stroke: rgba(42, 111, 126, 0.3);
+    stroke-dasharray: none;
+  }
+
+  .trust-packet {
+    fill: var(--color-primary-light);
+  }
+
+  .trust-packet--blocked {
+    fill: #dc3545;
+  }
+
+  .trust-packet-burst {
+    fill: none;
+    stroke: #dc3545;
+    stroke-width: 2;
+    opacity: 0;
+    animation: burst 2.5s infinite;
+  }
+
+  @keyframes burst {
+    0%, 95% { opacity: 0; transform: scale(0.5); transform-origin: 520px 200px; }
+    98% { opacity: 1; transform: scale(1.5); transform-origin: 520px 200px; }
+    100% { opacity: 0; transform: scale(2); transform-origin: 520px 200px; }
+  }
+
+  .trust-nodes {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .trust-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transform: translate(-50%, -50%);
+  }
+
+  .trust-node span {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+
+  .trust-node__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    border: 1px solid rgba(42, 111, 126, 0.2);
+    box-shadow: 0 4px 12px rgba(39, 49, 58, 0.08);
+    color: var(--color-primary);
+  }
+
+  .trust-node__icon svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  /* Node Positions mapped to SVG coordinates */
+  .trust-node--operator { left: 120px; top: 100px; }
+  .trust-node--workload { left: 120px; top: 300px; }
+  .trust-node--cloud { left: 680px; top: 200px; }
+
+  /* Internal Nodes */
+  .trust-node--secrets { left: 320px; top: 100px; }
+  .trust-node--audit { left: 320px; top: 300px; }
+  .trust-node--store { left: 480px; top: 200px; }
+
+  .trust-box {
+    position: absolute;
+    left: 200px;
+    top: 40px;
+    width: 360px;
+    height: 320px;
+    border: 2px dashed rgba(42, 111, 126, 0.4);
+    border-radius: 1.5rem;
+    background: rgba(244, 247, 248, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: -1;
+  }
+
+  .trust-box__label {
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(42, 111, 126, 0.15);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trust-packet {
+      display: none;
+    }
+    .trust-packet-burst {
+      display: none;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .trust-boundary__diagram {
+      transform: scale(0.7);
+      transform-origin: top center;
+      margin-bottom: -120px; /* Adjust for scaling */
+    }
+  }
+
+  @media (max-width: 600px) {
+    .trust-boundary__diagram {
+      transform: scale(0.5);
+      transform-origin: top center;
+      margin-bottom: -200px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .trust-boundary__diagram {
+      transform: scale(0.4);
+      transform-origin: top center;
+      margin-bottom: -240px;
+    }
+  }
+</style>

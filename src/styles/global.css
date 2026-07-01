@@ -337,8 +337,7 @@ ol, ul, menu { list-style: none; }
   background: var(--frame-shell);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(191, 196, 204, 0.16);
-  border-top: 0;
+  border-bottom: 1px solid rgba(191, 196, 204, 0.16);
   border-radius: 0 0 1.65rem 1.65rem;
   box-shadow:
     0 18px 42px rgba(2, 9, 7, 0.3),
