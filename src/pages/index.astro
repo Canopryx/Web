@@ -156,7 +156,34 @@ import Hero from "../components/Hero.astro";
 
     modal.querySelectorAll('[data-success-close]').forEach((element) => element.addEventListener('click', close));
     modal.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') close();
+      if (event.key === 'Escape') {
+        close();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusable = [...modal.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )].filter((element) => !element.hidden && element.getAttribute('aria-hidden') !== 'true');
+
+      if (focusable.length === 0) {
+        event.preventDefault();
+        card?.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const activeElement = document.activeElement as HTMLElement | null;
+      const activeIsFocusable = activeElement ? focusable.includes(activeElement) : false;
+      if (event.shiftKey && (document.activeElement === first || !activeIsFocusable)) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || !activeIsFocusable)) {
+        event.preventDefault();
+        first?.focus();
+      }
     });
 
     modal.hidden = false;

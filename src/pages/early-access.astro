@@ -211,10 +211,19 @@ import SiteFooter from "../components/SiteFooter.astro";
 
 <script>
   interface FormResponse { error?: string; }
+
+  let cleanupEarlyAccessForm = () => {};
   
   function initEarlyAccessForm() {
     const form = document.getElementById('early-access-form') as HTMLFormElement | null;
     const submit = document.getElementById('submit-btn') as HTMLButtonElement | null;
+
+    if (!form || !submit || form.dataset.initialized === 'true') return;
+    form.dataset.initialized = 'true';
+
+    cleanupEarlyAccessForm();
+    const controller = new AbortController();
+    let observer: IntersectionObserver | undefined;
     
     // Intersection Observer for progress rail
     const steps = document.querySelectorAll('.access-form__step');
@@ -222,7 +231,7 @@ import SiteFooter from "../components/SiteFooter.astro";
     const mobileStep = document.getElementById('mobile-step');
     
     if ('IntersectionObserver' in window && steps.length > 0) {
-      const observer = new IntersectionObserver((entries) => {
+      const sectionObserver = new IntersectionObserver((entries) => {
         let activeId = '';
         entries.forEach(entry => {
           if (entry.isIntersecting && entry.intersectionRatio > 0.2) {
@@ -244,7 +253,8 @@ import SiteFooter from "../components/SiteFooter.astro";
         }
       }, { rootMargin: '-20% 0px -60% 0px', threshold: 0.2 });
 
-      steps.forEach(step => observer.observe(step));
+      observer = sectionObserver;
+      steps.forEach(step => sectionObserver.observe(step));
     }
     
     // Smooth scrolling for links
@@ -258,11 +268,8 @@ import SiteFooter from "../components/SiteFooter.astro";
             target.scrollIntoView({ behavior: 'smooth' });
           }
         }
-      });
+      }, { signal: controller.signal });
     });
-
-    if (!form || !submit || form.dataset.initialized === 'true') return;
-    form.dataset.initialized = 'true';
     
     const text = document.getElementById('btn-text');
     const icon = document.getElementById('btn-icon');
@@ -290,9 +297,16 @@ import SiteFooter from "../components/SiteFooter.astro";
         if (icon) icon.hidden = false;
         if (spinner) spinner.hidden = true;
       }
-    });
+    }, { signal: controller.signal });
+
+    cleanupEarlyAccessForm = () => {
+      controller.abort();
+      observer?.disconnect();
+      form.removeAttribute('data-initialized');
+    };
   }
   
   initEarlyAccessForm();
   document.addEventListener('astro:page-load', initEarlyAccessForm);
+  document.addEventListener('astro:before-swap', () => cleanupEarlyAccessForm());
 </script>

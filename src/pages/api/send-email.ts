@@ -12,7 +12,7 @@ const personalEmailDomains = [
 ];
 const defaultContactRecipient = 'contact@canopryx.com';
 
-const contactSchema = z.object({
+export const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name is too long"),
   email: z.email("Invalid email address").max(100, "Email is too long").refine((val) => {
     const domain = val.split('@')[1]?.toLowerCase();
@@ -31,7 +31,7 @@ const workEmailSchema = z.email("Enter a valid work email address").max(100, "Em
   return Boolean(domain && !blockedDomains.includes(domain) && !personalEmailDomains.includes(domain));
 }, "Please use your organization email. Personal and disposable email addresses are not accepted.");
 
-const earlyAccessSchema = z.object({
+export const earlyAccessSchema = z.object({
   formType: z.literal('early-access'),
   name: z.string().trim().min(1, "Name is required").max(100, "Name is too long"),
   email: workEmailSchema,
@@ -45,22 +45,68 @@ const earlyAccessSchema = z.object({
   website: z.string().max(0).optional(),
 });
 
-const jsonResponse = (body: Record<string, unknown>, status: number) =>
+const jsonResponse = (
+  body: Record<string, unknown>,
+  status: number,
+  headers: Record<string, string> = {},
+) =>
   new Response(JSON.stringify(body), {
     status,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'no-store',
+      ...headers,
     },
   });
 
-function escapeHtml(value: string) {
+export function escapeHtml(value: string) {
   return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
+
+function getClientAddress(request: Request) {
+  const forwardedFor = request.headers.get('x-vercel-forwarded-for') ?? request.headers.get('x-forwarded-for');
+  return (
+    forwardedFor?.split(',')[0]?.trim() ||
+    request.headers.get('cf-connecting-ip') ||
+    request.headers.get('x-real-ip') ||
+    'unknown'
+  );
+}
+
+export function checkRateLimit(key: string, now = Date.now()) {
+  // Keep the module-level map bounded on warm serverless instances.
+  if (rateLimitBuckets.size > 1_000) {
+    for (const [bucketKey, bucket] of rateLimitBuckets) {
+      if (bucket.resetAt <= now) rateLimitBuckets.delete(bucketKey);
+    }
+  }
+
+  const existing = rateLimitBuckets.get(key);
+  if (!existing || existing.resetAt <= now) {
+    const resetAt = now + RATE_LIMIT_WINDOW_MS;
+    rateLimitBuckets.set(key, { count: 1, resetAt });
+    return { allowed: true, remaining: RATE_LIMIT_MAX_REQUESTS - 1, resetAt };
+  }
+
+  if (existing.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return { allowed: false, remaining: 0, resetAt: existing.resetAt };
+  }
+
+  existing.count += 1;
+  return {
+    allowed: true,
+    remaining: RATE_LIMIT_MAX_REQUESTS - existing.count,
+    resetAt: existing.resetAt,
+  };
 }
 
 function renderContactEmail({
@@ -219,9 +265,29 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
+    if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) {
+      return jsonResponse({ error: 'Content-Type must be application/json.' }, 415);
+    }
+
+    const rateLimit = checkRateLimit(getClientAddress(request));
+    const rateLimitHeaders = {
+      'X-RateLimit-Limit': String(RATE_LIMIT_MAX_REQUESTS),
+      'X-RateLimit-Remaining': String(rateLimit.remaining),
+      'X-RateLimit-Reset': String(Math.ceil(rateLimit.resetAt / 1000)),
+    };
+
+    if (!rateLimit.allowed) {
+      const retryAfter = Math.max(1, Math.ceil((rateLimit.resetAt - Date.now()) / 1000));
+      return jsonResponse(
+        { error: 'Too many requests. Please try again later.' },
+        429,
+        { ...rateLimitHeaders, 'Retry-After': String(retryAfter) },
+      );
+    }
+
     const contentLength = Number(request.headers.get('content-length') ?? 0);
     if (contentLength > 12_000) {
-      return jsonResponse({ error: 'Request is too large.' }, 413);
+      return jsonResponse({ error: 'Request is too large.' }, 413, rateLimitHeaders);
     }
 
     const rawData: unknown = await request.json();
@@ -233,7 +299,7 @@ export const POST: APIRoute = async ({ request }) => {
       typeof rawData.website === 'string' &&
       rawData.website.length > 0
     ) {
-      return jsonResponse({ success: true }, 200);
+      return jsonResponse({ success: true }, 200, rateLimitHeaders);
     }
 
     const isEarlyAccess = typeof rawData === 'object' && rawData !== null && 'formType' in rawData && rawData.formType === 'early-access';
@@ -241,7 +307,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!parsed.success) {
       const errorMsg = parsed.error.issues.map(i => i.message).join(", ");
-      return jsonResponse({ error: errorMsg }, 400);
+      return jsonResponse({ error: errorMsg }, 400, rateLimitHeaders);
     }
 
     const resend = new Resend(apiKey);
@@ -275,14 +341,14 @@ export const POST: APIRoute = async ({ request }) => {
             message: escapeHtml(parsed.data.message),
           }),
         };
-    const { data: resendData, error } = await resend.emails.send(emailOptions);
+    const { error } = await resend.emails.send(emailOptions);
 
     if (error) {
       console.error('Resend Error:', error);
-      return jsonResponse({ error: 'We could not send your message. Please try again.' }, 502);
+      return jsonResponse({ error: 'We could not send your message. Please try again.' }, 502, rateLimitHeaders);
     }
 
-    return jsonResponse({ success: true, id: resendData?.id }, 200);
+    return jsonResponse({ success: true }, 200, rateLimitHeaders);
   } catch (error: unknown) {
     console.error('Contact API error:', error);
     return jsonResponse({ error: 'Unable to process your request.' }, 500);

@@ -433,10 +433,25 @@ const nodes = [
 </style>
 
 <script>
+  let cleanupRadar = () => {};
+
   function initRadar() {
     const container = document.getElementById('radar-container');
     if (!container || container.dataset.initialized === 'true') return;
     container.dataset.initialized = 'true';
+
+    cleanupRadar();
+    const controller = new AbortController();
+    const pendingTimeouts = new Set<number>();
+    let pulseInterval: number | undefined;
+
+    const schedule = (callback: () => void, delay: number) => {
+      const timeoutId = window.setTimeout(() => {
+        pendingTimeouts.delete(timeoutId);
+        callback();
+      }, delay);
+      pendingTimeouts.add(timeoutId);
+    };
 
     const nodes = container.querySelectorAll('.radar-node');
     const titleEl = document.getElementById('radar-detail-title');
@@ -461,12 +476,6 @@ const nodes = [
       if (titleEl) titleEl.textContent = title;
       if (descEl) descEl.textContent = desc;
       
-      // Update connector angle
-      const connector = node.querySelector('.radar-node__connector') as HTMLElement;
-      if (connector) {
-         // This is a simple visual trick, ideally we'd calculate exact angles based on DOM rects.
-         // Let's just use CSS.
-      }
     }
 
     function clearActiveNode() {
@@ -484,7 +493,7 @@ const nodes = [
         } else {
           setActiveNode(htmlNode);
         }
-      });
+      }, { signal: controller.signal });
 
       htmlNode.addEventListener('mouseenter', () => {
         container.classList.add('radar-container--paused');
@@ -493,7 +502,7 @@ const nodes = [
           if (titleEl) titleEl.textContent = htmlNode.querySelector('.radar-node__text')?.textContent || defaultTitle;
           if (descEl) descEl.textContent = htmlNode.getAttribute('data-desc') || defaultDesc;
         }
-      });
+      }, { signal: controller.signal });
 
       htmlNode.addEventListener('mouseleave', () => {
         container.classList.remove('radar-container--paused');
@@ -506,33 +515,42 @@ const nodes = [
           if (titleEl) titleEl.textContent = defaultTitle;
           if (descEl) descEl.textContent = defaultDesc;
         }
-      });
+      }, { signal: controller.signal });
 
       htmlNode.addEventListener('focus', () => {
         container.classList.add('radar-container--paused');
-      });
+      }, { signal: controller.signal });
 
       htmlNode.addEventListener('blur', () => {
         container.classList.remove('radar-container--paused');
-      });
+      }, { signal: controller.signal });
     });
 
     // Sub-pulse synchronization (8s cycle)
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setInterval(() => {
+      pulseInterval = window.setInterval(() => {
         // Find current angle of sweep (this is an approximation since we can't easily read animation transform precisely without heavy rAF)
         // Given 8s linear loop, 360deg = 8000ms.
         // For visual flair, we'll just periodically pulse nodes in sequence.
         nodes.forEach((node, idx) => {
-          setTimeout(() => {
+          schedule(() => {
             node.classList.add('is-pulsing');
-            setTimeout(() => node.classList.remove('is-pulsing'), 400);
+            schedule(() => node.classList.remove('is-pulsing'), 400);
           }, idx * 1000);
         });
       }, 8000);
     }
+
+    cleanupRadar = () => {
+      controller.abort();
+      if (pulseInterval !== undefined) window.clearInterval(pulseInterval);
+      pendingTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      pendingTimeouts.clear();
+      container.removeAttribute('data-initialized');
+    };
   }
 
   initRadar();
   document.addEventListener('astro:page-load', initRadar);
+  document.addEventListener('astro:before-swap', () => cleanupRadar());
 </script>

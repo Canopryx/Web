@@ -65,11 +65,19 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <script>
+  let cleanupNav = () => {};
+
   function initNav() {
     const toggle = document.getElementById('nav-toggle');
     const mobileNav = document.getElementById('mobile-nav');
 
     if (toggle && mobileNav) {
+      if (toggle.dataset.initialized === 'true') return;
+      toggle.dataset.initialized = 'true';
+
+      cleanupNav();
+      const controller = new AbortController();
+
       const setOpen = (isOpen: boolean) => {
         if (mobileNav.classList.contains('is-open') === isOpen) return;
         mobileNav.classList.toggle('is-open', isOpen);
@@ -91,22 +99,31 @@ const currentPath = Astro.url.pathname;
           setOpen(false);
           toggle.focus();
         }
-      });
+      }, { signal: controller.signal });
 
       document.addEventListener('click', (event) => {
         if (mobileNav.classList.contains('is-open') && !mobileNav.contains(event.target as Node)) {
           setOpen(false);
         }
-      });
+      }, { signal: controller.signal });
 
       window.addEventListener('scroll', () => {
         if (mobileNav.classList.contains('is-open')) {
           setOpen(false);
         }
-      }, { passive: true });
+      }, { passive: true, signal: controller.signal });
+
+      cleanupNav = () => {
+        controller.abort();
+        toggle.onclick = null;
+        mobileNav.querySelectorAll('a').forEach((link) => {
+          (link as HTMLAnchorElement).onclick = null;
+        });
+      };
     }
   }
 
   initNav();
   document.addEventListener('astro:page-load', initNav);
+  document.addEventListener('astro:before-swap', () => cleanupNav());
 </script>
