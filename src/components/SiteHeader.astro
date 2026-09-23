@@ -30,6 +30,12 @@ const currentPath = Astro.url.pathname;
         Products
       </a>
       <a
+        class={`navbar__link ${currentPath === '/services' || currentPath === '/services/' ? 'navbar__link--active' : ''}`}
+        href="/services"
+      >
+        Services
+      </a>
+      <a
         class={`navbar__link ${currentPath === '/about' || currentPath === '/about/' ? 'navbar__link--active' : ''}`}
         href="/about"
       >
@@ -59,6 +65,7 @@ const currentPath = Astro.url.pathname;
   <div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
     <a class="mobile-nav__link" href="/" id="mobile-home-link">Home</a>
     <a class="mobile-nav__link" href="/products" id="mobile-products-link">Products</a>
+    <a class="mobile-nav__link" href="/services" id="mobile-services-link">Services</a>
     <a class="mobile-nav__link" href="/about" id="mobile-about-link">About</a>
     <a class="mobile-nav__cta" href="/contact" id="mobile-contact-btn">Contact</a>
   </div>
