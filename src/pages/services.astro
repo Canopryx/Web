@@ -1,0 +1,177 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFrame from "../components/SiteFrame.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import ScrollReveal from "../components/ScrollReveal.astro";
+
+const testAreas = [
+  {
+    id: "web-app",
+    title: "Web Application Penetration Testing",
+    badge: "App & API Security",
+    description: "Manual, in-depth testing of your web applications and APIs for authentication and session handling, access control, business logic flaws, injection vulnerabilities, and the kinds of issues automated scanners consistently miss.",
+    icon: `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="service-card__icon">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+        <path d="M7 8h10" />
+        <path d="M7 12h5" />
+      </svg>
+    `
+  },
+  {
+    id: "network",
+    title: "Network Penetration Testing",
+    badge: "Internal & External",
+    description: "Internal and external network assessments to identify exploitable misconfigurations, weak segmentation, exposed services, and paths an attacker could use to move laterally and escalate privileges across your environment.",
+    icon: `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="service-card__icon">
+        <rect x="2" y="2" width="6" height="6" rx="1" />
+        <rect x="16" y="2" width="6" height="6" rx="1" />
+        <rect x="9" y="16" width="6" height="6" rx="1" />
+        <path d="M5 8v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8" />
+        <path d="M12 13v3" />
+      </svg>
+    `
+  },
+  {
+    id: "physical",
+    title: "Physical Penetration Testing",
+    badge: "On-Site Assessment",
+    description: "On-site assessments of physical access controls including facility entry points, badge and lock systems, social engineering vectors, and the physical safeguards protecting your infrastructure and sensitive areas.",
+    icon: `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="service-card__icon">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+    `
+  }
+];
+
+const certifications = [
+  { code: "CEH", name: "Certified Ethical Hacker" },
+  { code: "CompTIA Security+", name: "Security+ Certified" },
+  { code: "PNPT", name: "Practical Network Penetration Tester" },
+  { code: "eJPT", name: "eLearnSecurity Junior Pen Tester" },
+  { code: "eCPPT", name: "eLearnSecurity Certified Professional Pen Tester" },
+  { code: "+ More", name: "Industry Recognized Credentials" }
+];
+---
+
+<BaseLayout
+  title="Services - Canopryx Red Team"
+  description="Offensive security assessments for organizations that need to know exactly how they'd hold up against a real adversary."
+>
+  <SiteFrame>
+    <main>
+      <section class="services page-shell">
+        <div class="services__header">
+          <div class="eyebrow enter-after-nav" style="--enter-delay: 0.4s;">
+            <span class="eyebrow__dot"></span>
+            Offensive Security
+          </div>
+          <h1 class="services__title enter-after-nav" style="--enter-delay: 0.5s;">
+            Red Team Services
+          </h1>
+          <p class="services__subtitle enter-after-nav" style="--enter-delay: 0.58s;">
+            Offensive security assessments for organizations that need to know exactly how they’d hold up against a real adversary, not just what a scanner can find.
+          </p>
+        </div>
+
+        <!-- High Trust Standard Banner -->
+        <div class="services__trust-banner panel reveal">
+          <div class="services__trust-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.8 17 5 19 5a1 1 0 0 1 1 1z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="services__trust-content">
+            <h2 class="services__trust-title">Built for High-Trust Environments</h2>
+            <p class="services__trust-text">
+              The same standard we hold our own infrastructure to is the standard we bring to yours. Every engagement is strictly scoped, meticulously executed, and actionable for your team.
+            </p>
+          </div>
+        </div>
+
+        <!-- What We Test Section -->
+        <div class="services__section">
+          <div class="services__section-header">
+            <h2 class="services__section-title">What We Test</h2>
+            <p class="services__section-desc">Comprehensive adversary simulation across digital, network, and physical attack surfaces.</p>
+          </div>
+
+          <div class="services__grid">
+            {testAreas.map((area, index) => (
+              <div class="service-card panel reveal" style={`--reveal-delay: ${index * 0.1}s;`}>
+                <div class="service-card__top">
+                  <div class="service-card__icon-wrap" set:html={area.icon} />
+                  <span class="service-card__badge">{area.badge}</span>
+                </div>
+                <h3 class="service-card__title">{area.title}</h3>
+                <p class="service-card__desc">{area.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Certified Operators Section -->
+        <div class="services__certifications panel reveal">
+          <div class="services__cert-header">
+            <div class="eyebrow eyebrow--dark">
+              <span>Verified Expertise</span>
+            </div>
+            <h2 class="services__cert-title">Certified Operators</h2>
+            <p class="services__cert-desc">
+              Every engagement is run by certified red team professionals holding industry-recognized credentials.
+            </p>
+          </div>
+
+          <div class="services__cert-grid">
+            {certifications.map((cert) => (
+              <div class="cert-badge">
+                <div class="cert-badge__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <div class="cert-badge__info">
+                  <span class="cert-badge__code">{cert.code}</span>
+                  <span class="cert-badge__name">{cert.name}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Get Started CTA Card -->
+        <div class="services__cta-card reveal">
+          <div class="services__cta-glow" aria-hidden="true"></div>
+          <div class="services__cta-content">
+            <h2 class="services__cta-title">Ready to assess your security posture?</h2>
+            <p class="services__cta-text">
+              Considering a red team engagement for your product or infrastructure? Reach out to us and let’s talk about what a test tailored to your environment would look like.
+            </p>
+            <div class="services__cta-actions">
+              <a href="mailto:contact@canopryx.com" class="btn-primary">
+                <span>Get in touch</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M3.33331 8H12.6666M12.6666 8L8.00002 3.33334M12.6666 8L8.00002 12.6667" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <a href="/contact" class="btn-secondary">
+                <span>View Contact Page</span>
+              </a>
+            </div>
+            <p class="services__cta-email">Direct contact: <a href="mailto:contact@canopryx.com" class="services__email-link">contact@canopryx.com</a></p>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </SiteFrame>
+
+  <SiteFooter noMargin={true} />
+  <ScrollReveal />
+</BaseLayout>
