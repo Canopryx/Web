@@ -972,10 +972,10 @@ ol, ul, menu { list-style: none; }
 
 .footer__links-area {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   justify-self: end;
-  width: min(100%, 28rem);
+  width: min(100%, 36rem);
 }
 
 .footer__col-title {

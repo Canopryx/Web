@@ -29,6 +29,14 @@ const organizationSchema = {
   description:
     "Canopryx builds on-premises security infrastructure for regulated and high-trust environments.",
   email: "contact@canopryx.com",
+  sameAs: [
+    "https://x.com/canopryx",
+    "https://medium.com/@canopryx",
+    "https://www.instagram.com/canopryx/",
+    "https://www.facebook.com/canopryx/",
+    "https://www.youtube.com/@Canopryx",
+    "https://www.linkedin.com/company/canopryx",
+  ],
 };
 ---
 
@@ -59,6 +67,8 @@ const organizationSchema = {
     <meta property="og:image:alt" content={imageAlt} />
 
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@canopryx" />
+    <meta name="twitter:creator" content="@canopryx" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
